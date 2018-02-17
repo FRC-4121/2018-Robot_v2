@@ -33,7 +33,7 @@ public class OI {
 	
 	//Initializations
 	public Joystick leftJoy, rightJoy;
-	//public XboxController xbox;
+	public XboxController xbox;
 	//public DigitalInput limitSwitchEnd, limitSwitchClimb;
 	public ADXRS450_Gyro MainGyro;
 	public Encoder rightEncoder, leftEncoder;
@@ -41,7 +41,7 @@ public class OI {
 	public Button elevatorHome, elevatorSwitch, elevatorScale, practiceEncoder;
 	public Button practiceEncoders;
 	public Button openGrabber, closeGrabber;
-	//public static final int kXboxPort = 2;
+	public static final int kXboxPort = 2;
 	// public static final Button elevatorHome = new Button (A);
 	
 	public OI() {
@@ -56,20 +56,20 @@ public class OI {
 		//Joysticks
 		leftJoy = new Joystick(1);
 		rightJoy = new Joystick(0);
-		//xbox = new XboxController(kXboxPort); //can change later
+		xbox = new XboxController(kXboxPort); //can change later
 		
 //		//Buttons
 		
 //		shoot = new JoystickButton(rightJoy, 1);
 		shiftDown = new JoystickButton(rightJoy, 4);
-		//shiftUp = new JoystickButton(rightJoy, 5);
-		//switchDrive = new JoystickButton(leftJoy, 2);
-//		openGrabber = new JoystickButton (leftJoy, 4);
-//		closeGrabber = new JoystickButton(leftJoy, 5);
+		shiftUp = new JoystickButton(rightJoy, 5);
+		switchDrive = new JoystickButton(leftJoy, 2);
+		openGrabber = new JoystickButton (leftJoy, 4);
+		closeGrabber = new JoystickButton(leftJoy, 5);
 
 		
 		//elevatorSwitch = new JoystickButton(leftJoy, 3);
-		//climb = new JoystickButton(leftJoy, 4);
+		climb = new JoystickButton(xbox, 3);
 		//reverseClimb = new JoystickButton (leftJoy, 5);
 //		
 //		gear = new JoystickButton(leftJoy, 2);
@@ -83,7 +83,7 @@ public class OI {
 //		reverseClimb.whenReleased(new StopClimbCommand());
 	//	practiceEncoders.whenPressed(new PraticeEncoders());
 	//	shiftUp.whenActive(new ShiftUpCommand());
-		shiftDown.whenActive(new ShiftDownCommand());
+//		shiftDown.whenActive(new ShiftDownCommand());
 		//switchDrive.whenPressed(new SwitchDriveCommand());
 		//openGrabber.whenPressed(new OpenArmsCommand());
 	//	closeGrabber.whenPressed(new ClosedArmsCommand());
