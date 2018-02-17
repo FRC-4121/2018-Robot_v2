@@ -29,6 +29,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.*;
 
+//adding a test to see if this works
+
 /**
   * The VM is configured to automatically run this class, and to call the
  * We made a thing
