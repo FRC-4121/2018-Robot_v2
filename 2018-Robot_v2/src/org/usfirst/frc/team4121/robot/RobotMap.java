@@ -117,7 +117,7 @@ public class RobotMap {
 		public static final int kMotorPort = 0;
 		public static final int kMotor2Port = 1 ;
 
-		public static final int kMaxMotorCurrent = 40 ;
-		public static final int kPeakMotorCurrent = 60 ;
+		public static final int kMaxMotorCurrent = 20 ;
+		public static final int kPeakMotorCurrent = 30 ;
 
 }

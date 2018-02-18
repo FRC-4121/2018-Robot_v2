@@ -19,7 +19,7 @@ public class EndEffector extends Subsystem {
 	
 	//solenoid setup
 	Compressor compressor = new Compressor(RobotMap.COMPRESSOR); //change this value
-	public DoubleSolenoid armSolenoid = new DoubleSolenoid(2,3);
+	public DoubleSolenoid armSolenoid = new DoubleSolenoid(0,1);
 	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -55,9 +55,6 @@ public class EndEffector extends Subsystem {
     	}
     	
     }
-    public void resetArms()
-    {
-    	armSolenoid.set(DoubleSolenoid.Value.kOff);
-    }
+  
 }
 

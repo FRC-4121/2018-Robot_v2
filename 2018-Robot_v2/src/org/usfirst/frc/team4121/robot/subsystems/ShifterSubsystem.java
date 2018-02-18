@@ -5,6 +5,7 @@ import org.usfirst.frc.team4121.robot.RobotMap;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *	Shifter subsystem
@@ -18,7 +19,7 @@ public class ShifterSubsystem extends Subsystem {
 	Compressor compressor = new Compressor(RobotMap.COMPRESSOR);
 	
 	//initializes the double solenoid
-	public DoubleSolenoid shifterSolenoid = new DoubleSolenoid(0,1);
+	public DoubleSolenoid shifterSolenoid = new DoubleSolenoid(2,3);
 	
     public void initDefaultCommand() {
     }
@@ -26,11 +27,13 @@ public class ShifterSubsystem extends Subsystem {
     //Changes the solenoid to kReverse or slow mode
     public void shiftUp() {
     	shifterSolenoid.set(DoubleSolenoid.Value.kReverse);
+    	SmartDashboard.putString("Shift Up", "true");
     }
     
     //Changes the solenoid to kForward or fast mode
     public void shiftDown() {
     	shifterSolenoid.set(DoubleSolenoid.Value.kForward);
+    	SmartDashboard.putString("Shift Down", "true");
     }
     
     //Makes the gear position default to kForward or fast

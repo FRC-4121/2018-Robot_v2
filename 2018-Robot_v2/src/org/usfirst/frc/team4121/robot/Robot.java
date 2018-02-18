@@ -103,12 +103,13 @@ public class Robot extends IterativeRobot {
 //		cubeHeight = visionTable.getEntry("height");
 
 		//Initialize subsystems
-		oi = new OI();
+		
 		driveTrain = new DriveTrainSubsystem();
 		shifter = new ShifterSubsystem();
 		climber = new ClimberSubsystem();
 		end = new EndEffector();
 		elevator = new ElevatorSubsystem();
+		oi = new OI();
 	
 		
 
@@ -131,130 +132,6 @@ public class Robot extends IterativeRobot {
 		//Initialize variables
 		distanceTraveled = 0.0;
 		angleTraveled = 0.0;
-		
-		
-		//elevator code
-		// * inches per rev = Drum Dia * PI * motor-drum sprocket ratio
-		// */
-		elevator.inchesPerRev = RobotMap.kWinchDrumDia * 3.1415 * RobotMap.kMotorSprocketTeeth /
-				RobotMap.kDrumShaftSprocketTeeth;
-		elevator.encoderPulsesPerOutputRev = RobotMap.kEncoderPPR * RobotMap.kEncoderRatio;
-
-		/* first choose the sensor */
-		elevator.m_motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, RobotMap.kTimeoutMs);
-		elevator.m_motor.setSensorPhase(true);
-
-		/* Set relevant frame periods to be at least as fast as periodic rate*/
-		elevator.m_motor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, RobotMap.kTimeoutMs);
-		elevator.m_motor.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, RobotMap.kTimeoutMs);
-
-		/* set the peak, nominal outputs */
-		elevator.m_motor.configNominalOutputForward(0, RobotMap.kTimeoutMs);
-		elevator.m_motor.configNominalOutputReverse(0, RobotMap.kTimeoutMs);
-		elevator.m_motor.configPeakOutputForward(1, RobotMap.kTimeoutMs);
-		elevator.m_motor.configPeakOutputReverse(-1, RobotMap.kTimeoutMs);
-
-		elevator.m_motor2_follower.configNominalOutputForward(0, RobotMap.kTimeoutMs);
-		elevator.m_motor2_follower.configNominalOutputReverse(0, RobotMap.kTimeoutMs);
-		elevator.m_motor2_follower.configPeakOutputForward(1, RobotMap.kTimeoutMs);
-		elevator.m_motor2_follower.configPeakOutputReverse(-1, RobotMap.kTimeoutMs);
-
-		/* set closed loop gains in slot0 */
-		/* these will need to be tuned once the final masses are known */
-		elevator.m_motor.config_kF(RobotMap.kPIDLoopIdx, RobotMap.kf, RobotMap.kTimeoutMs);
-		elevator.m_motor.config_kP(RobotMap.kPIDLoopIdx, RobotMap.kp, RobotMap.kTimeoutMs);
-		elevator.m_motor.config_kI(RobotMap.kPIDLoopIdx, RobotMap.ki, RobotMap.kTimeoutMs);
-		elevator.m_motor.config_kD(RobotMap.kPIDLoopIdx, RobotMap.kd, RobotMap.kTimeoutMs);
-
-		/* set acceleration and vcruise velocity - see documentation */
-		/* velocity and acceleration has to be in encoder units
-		 * rev/s = inches per sec / inches per revolution
-		 * velocity is encoder pules per 100ms = rev/s*PPR*GearRatio/10 ;
-		 */
-		elevator.m_motor.configMotionCruiseVelocity((int) RobotMap.kCruiseSpeedUp / (int) elevator.inchesPerRev * elevator.encoderPulsesPerOutputRev / 10, RobotMap.kTimeoutMs);
-		elevator.m_motor.configMotionAcceleration((int) RobotMap.kAccelerationUp / (int) elevator.inchesPerRev * elevator.encoderPulsesPerOutputRev / 10, RobotMap.kTimeoutMs);
-
-		/* zero the sensor */
-		elevator.m_motor.setSelectedSensorPosition(0, RobotMap.kPIDLoopIdx, RobotMap.kTimeoutMs);
-
-		/* set current limit */
-		elevator.m_motor.configPeakCurrentLimit(RobotMap.kMaxMotorCurrent, 100);
-
-		elevator.m_motor2_follower.set(ControlMode.Follower, RobotMap.kMotorPort);
-		
-		
-		//elevator code
-		// * inches per rev = Drum Dia * PI * motor-drum sprocket ratio
-		// */
-		elevator.inchesPerRev = RobotMap.kWinchDrumDia * 3.1415 * RobotMap.kMotorSprocketTeeth /
-				RobotMap.kDrumShaftSprocketTeeth;
-		elevator.encoderPulsesPerOutputRev = RobotMap.kEncoderPPR * RobotMap.kEncoderRatio;
-		
-		/*
-		 *  Set motion magic values for scale and switch
-		 */
-		 
-		/* set acceleration and vcruise velocity - see documentation */
-		/* velocity and acceleration has to be in encoder units
-		/* rev/s = inches per sec / inches per revolution
-		/* velocity is encoder pules per 100ms = rev/s*PPR*GearRatio/10 ;
-		*/
-		
-		elevator.cruiseVelocityUp = RobotMap.kCruiseSpeedUp/inchesPerRev*encoderPulsesPerOutputRev/10 ;
-		elevator.cruiseVelocityDn = RobotMap.kCruiseSpeedDown/inchesPerRev*encoderPulsesPerOutputRev/10 ;
-		elevator.accelUp = RobotMap.kAccelerationUp/inchesPerRev*encoderPulsesPerOutputRev/10 ;
-		elevator.accelDn = RobotMap.kAccelerationDown/inchesPerRev*encoderPulsesPerOutputRev/10 ;
-		elevator.targetPosSwitch = RobotMap.dPosSwitch/inchesPerRev*4096/RobotMap.dFudgeFactor;
-		elevator.targetPosScale = RobotMap.dPosScale/inchesPerRev*4096/RobotMap.dFudgeFactor ;
-		elevator.bumpUp = RobotMap.dPosBumpUp/inchesPerRev*4096/RobotMap.dFudgeFactor ;
-		elevator.bumpDn = RobotMap.dPosBumpDown/inchesPerRev*4096/RobotMap.dFudgeFactor ;
-		
-//
-//		/* first choose the sensor */
-		elevator.m_motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, RobotMap.kTimeoutMs);
-		elevator.m_motor.setSensorPhase(true);
-		
-		/* configure the motors */
-		elevator.m_motor2_follower.set(ControlMode.Follower, RobotMap.ELEVATOR_MOTOR_SLAVE);
-		
-//
-//		/* Set relevant frame periods to be at least as fast as periodic rate*//		
-		elevator.m_motor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, RobotMap.kTimeoutMs);
-		elevator.m_motor.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, RobotMap.kTimeoutMs);
-//
-//		/* set the peak, nominal outputs */
-		elevator.m_motor.configNominalOutputForward(0, RobotMap.kTimeoutMs);
-		elevator.m_motor.configNominalOutputReverse(0, RobotMap.kTimeoutMs);
-		elevator.m_motor.configPeakOutputForward(1, RobotMap.kTimeoutMs);
-		elevator.m_motor.configPeakOutputReverse(-1, RobotMap.kTimeoutMs);
-//
-		elevator.m_motor2_follower.configNominalOutputForward(0, RobotMap.kTimeoutMs);
-		elevator.m_motor2_follower.configNominalOutputReverse(0, RobotMap.kTimeoutMs);
-		elevator.m_motor2_follower.configPeakOutputForward(1, RobotMap.kTimeoutMs);
-		elevator.m_motor2_follower.configPeakOutputReverse(-1, RobotMap.kTimeoutMs);
-//
-//		/* set closed loop gains in slot0 */
-//		/* these will need to be tuned once the final masses are known */
-		elevator.m_motor.config_kF(RobotMap.kPIDLoopIdx, RobotMap.kf, RobotMap.kTimeoutMs);
-		elevator.m_motor.config_kP(RobotMap.kPIDLoopIdx, RobotMap.kp, RobotMap.kTimeoutMs);
-		elevator.m_motor.config_kI(RobotMap.kPIDLoopIdx, RobotMap.ki, RobotMap.kTimeoutMs);
-		elevator.m_motor.config_kD(RobotMap.kPIDLoopIdx, RobotMap.kd, RobotMap.kTimeoutMs);
-
-
-
-//		/* zero the sensor */
-		elevator.m_motor.setSelectedSensorPosition(0, RobotMap.kPIDLoopIdx, RobotMap.kTimeoutMs);
-
-
-		/* set current limit */
-		elevator.m_motor.configPeakCurrentLimit(RobotMap.kPeakMotorCurrent, 100) ;
-		elevator.m_motor.configContinuousCurrentLimit(RobotMap.kMaxMotorCurrent, 100) ;
-		elevator.m_motor.configPeakCurrentDuration(100, 0 ) ;
-		elevator.m_motor.enableCurrentLimit(true);
-		elevator.m_motor2_follower.configPeakCurrentLimit(RobotMap.kPeakMotorCurrent, 100) ;
-		elevator.m_motor2_follower.configContinuousCurrentLimit(RobotMap.kMaxMotorCurrent, 100) ;
-		elevator.m_motor2_follower.configPeakCurrentDuration(100, 0 ) ;
-		elevator.m_motor2_follower.enableCurrentLimit(true);
 
 		
 	}
@@ -382,6 +259,10 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		
 		
+		SmartDashboard.putNumber("Master Current", Robot.elevator.m_motor.getOutputCurrent());
+		SmartDashboard.putNumber("Slave Current", Robot.elevator.m_motor2_follower.getOutputCurrent());
+		SmartDashboard.putNumber("Master Output", Robot.elevator.m_motor.getMotorOutputPercent());
+		SmartDashboard.putNumber("Slave Output", Robot.elevator.m_motor2_follower.getMotorOutputPercent());
 
 		//Start scheduler
 		Scheduler.getInstance().run();
