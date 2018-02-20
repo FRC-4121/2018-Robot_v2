@@ -44,12 +44,18 @@ import edu.wpi.first.networktables.*;
 public class Robot extends IterativeRobot {
 		
 	//Network tables
-//	public NetworkTableInstance dataTableInstance;
-//	//public NetworkTable visionTable;
-////	public NetworkTable vmxTable;
-//	public NetworkTableEntry cubeHeight;
-//	public NetworkTableEntry cubeAngle;
-//	public NetworkTableEntry cubeDistance;
+	public NetworkTableInstance dataTableInstance;
+	public NetworkTable visionTable;
+	public NetworkTable navxTable;
+	public NetworkTableEntry robotStop;
+	public NetworkTableEntry cubeHeight;
+	public NetworkTableEntry cubeAngle;
+	public NetworkTableEntry cubeDistance;
+	public NetworkTableEntry driveAngle;
+	public NetworkTableEntry yVelocity;
+	public NetworkTableEntry xVelocity;
+	public NetworkTableEntry yDisplacement;
+	public NetworkTableEntry xDisplacement;
 	
 	//Subsystems
 	public static DriveTrainSubsystem driveTrain;
@@ -64,6 +70,7 @@ public class Robot extends IterativeRobot {
 	//SmartDashboard chooser
 	private SendableChooser<Command> chooser;
 	
+	//Commands
 	private Command autonomousCommand;
 
 	//encoder math values
@@ -80,7 +87,7 @@ public class Robot extends IterativeRobot {
    // private static final int kMotorPort = 0;
    // private static final int kXboxPort = 0;
 
-  //  private XboxController m_xboxController; don't think we need this
+    //private XboxController m_xboxController; don't think we need this
     private double targetPos = 0;
     private double oldTargetPos;
     private double inchesPerRev;
@@ -95,15 +102,24 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		
 		//Network tables
-//		dataTableInstance = NetworkTableInstance.getDefault();
-//		visionTable = dataTableInstance.getTable("vision");
-//		vmxTable = dataTableInstance.getTable("navx");
-//		cubeAngle = visionTable.getEntry("angle");
-//		cubeDistance = visionTable.getEntry("distance");
-//		cubeHeight = visionTable.getEntry("height");
-
-		//Initialize subsystems
+		dataTableInstance = NetworkTableInstance.getDefault();
+		visionTable = dataTableInstance.getTable("vision");
+		navxTable = dataTableInstance.getTable("navx");
 		
+		robotStop = visionTable.getEntry("RobotStop");
+		cubeAngle = visionTable.getEntry("cubeAngle");
+		cubeDistance = visionTable.getEntry("cubeDistance");
+		cubeHeight = visionTable.getEntry("cubeHeight");
+		driveAngle = navxTable.getEntry("driveAngle");
+		yVelocity = navxTable.getEntry("YVelocity");
+		xVelocity = navxTable.getEntry("XVelocity");
+		yDisplacement = navxTable.getEntry("YDisplacement");
+		xDisplacement = navxTable.getEntry("XDisplacement");
+
+		robotStop.setDouble(0.0);
+		
+		
+		//Initialize subsystems		
 		driveTrain = new DriveTrainSubsystem();
 		shifter = new ShifterSubsystem();
 		climber = new ClimberSubsystem();
@@ -111,8 +127,6 @@ public class Robot extends IterativeRobot {
 		elevator = new ElevatorSubsystem();
 		oi = new OI();
 	
-		
-
 		
 		//Initialize dashboard choosers
 		chooser = new SendableChooser<>();
@@ -132,12 +146,9 @@ public class Robot extends IterativeRobot {
 		//Initialize variables
 		distanceTraveled = 0.0;
 		angleTraveled = 0.0;
-
 		
 	}
 	
-
-		
 
 	void Disabled() {
 		while(isDisabled()) {
@@ -188,13 +199,13 @@ public class Robot extends IterativeRobot {
 		 */
 		
 //		String gameData;
-//		gameData = DriverStation.getInstance().getGameSpecificMessage();
-//		RobotMap.AUTO_SWITCH_POSITION = gameData.charAt(0);
-//		SmartDashboard.putString("First Character in String", Character.toString(RobotMap.AUTO_SWITCH_POSITION) );
-//
-//		//Get selected autonomous command
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
+		RobotMap.AUTO_SWITCH_POSITION = gameData.charAt(0);
+		SmartDashboard.putString("First Character in String", Character.toString(RobotMap.AUTO_SWITCH_POSITION) );
+
+		//Get selected autonomous command
 		autonomousCommand = chooser.getSelected();
-//		
+		
 //		//Reset encoders
 	
 	

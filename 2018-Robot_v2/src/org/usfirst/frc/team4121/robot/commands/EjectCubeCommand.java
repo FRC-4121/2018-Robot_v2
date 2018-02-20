@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4121.robot.commands;
 
 import org.usfirst.frc.team4121.robot.Robot;
+import org.usfirst.frc.team4121.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -8,21 +9,20 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SpinWheelsOutCommand extends Command {
+public class EjectCubeCommand extends Command {
 
+	private char robotSide;
 	private double startTime;
 	private double stopTime = 1.0;
 	private Timer wheelTimer = new Timer();
+	
+    public EjectCubeCommand(char side) {
 
-
-    public SpinWheelsOutCommand() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    	//Require end effector subsystem
     	requires(Robot.end);
     	
-    	//Initialize local variables
-    	//stopTime = time;
-    	
+    	robotSide = side;
+
     }
 
     
@@ -31,21 +31,25 @@ public class SpinWheelsOutCommand extends Command {
     	
     	wheelTimer.start();
     	startTime = wheelTimer.get();
-    	
+
     }
 
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	Robot.end.endeffector(-1.0);
-    	
+    	if (robotSide == 'N' || robotSide == RobotMap.AUTO_SWITCH_POSITION)
+    	{
+        	Robot.end.endeffector(-1.0);
+        	Robot.end.openArms();
+    	}
+    	    	
     }
 
     
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-   
+    	
     	boolean stopYet = false;
     	
     	if(stopTime <= (wheelTimer.get() - startTime))
@@ -54,14 +58,18 @@ public class SpinWheelsOutCommand extends Command {
     	}
     	
     	return stopYet;
+
+    }
+
+    
+    // Called once after isFinished returns true
+    protected void end() {
+    	
+    	Robot.end.endeffector(0);
     	
     }
 
-    // Called once after isFinished returns true
-    protected void end() {
-    	Robot.end.endeffector(0);
-    }
-
+    
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {

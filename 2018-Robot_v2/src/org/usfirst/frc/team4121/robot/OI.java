@@ -14,11 +14,13 @@ import org.usfirst.frc.team4121.robot.commands.ClimbReverseCommand;
 import org.usfirst.frc.team4121.robot.commands.PraticeEncoders;
 import org.usfirst.frc.team4121.robot.commands.ShiftDownCommand;
 import org.usfirst.frc.team4121.robot.commands.ShiftUpCommand;
+import org.usfirst.frc.team4121.robot.commands.SpinWheelsInCommand;
 import org.usfirst.frc.team4121.robot.commands.SpinWheelsOutCommand;
 import org.usfirst.frc.team4121.robot.commands.StopClimbCommand;
 import org.usfirst.frc.team4121.robot.commands.SwitchDriveCommand;
 import org.usfirst.frc.team4121.robot.commands.TakeInCubeCommandGroup;
 import org.usfirst.frc.team4121.robot.commands.ClosedArmsCommand;
+import org.usfirst.frc.team4121.robot.commands.EjectCubeCommandGroup;
 import org.usfirst.frc.team4121.robot.commands.ElevatorToHomeCommand;
 import org.usfirst.frc.team4121.robot.commands.ElevatorToScaleCommand;
 import org.usfirst.frc.team4121.robot.commands.ElevatorToSwitchCommand;
@@ -35,8 +37,8 @@ public class OI {
 	
 	//Initializations
 	public Joystick leftJoy, rightJoy;
-	//public XboxController xbox;
-	//public DigitalInput limitSwitchEnd, limitSwitchClimb;
+	public XboxController xbox;
+	public DigitalInput limitSwitchClimbBottomStop,limitSwitchClimbUpperStop;
 	public ADXRS450_Gyro MainGyro;
 	public Encoder rightEncoder, leftEncoder;
 	public Button shoot, feed, climb, reverseClimb, servo, shiftUp, shiftDown, gear, boiler, switchDrive, increaseShootSpeed, decreaseShootSpeed;
@@ -49,33 +51,70 @@ public class OI {
 	public OI() {
 	
 		//Limit Switch
-		//limitSwitchEnd = new DigitalInput(4);  
+		limitSwitchClimbBottomStop = new DigitalInput(0);  
+		limitSwitchClimbUpperStop = new DigitalInput(1);
 		//limitSwitchClimb = new DigitalInput(5);
 		
-		//Gyro
+		
+		//Define gyro
 		MainGyro = new ADXRS450_Gyro();
-				
-		//Joysticks
-		leftJoy = new Joystick(1);
+		
+		
+		//Define controllers
+		leftJoy = new Joystick(2);
 		rightJoy = new Joystick(0);
-	//	xbox = new XboxController(kXboxPort); //can change later
+		xbox = new XboxController(1);
 		
-//		//Buttons
 		
-//		shoot = new JoystickButton(rightJoy, 1);
+		//Left joystick buttons
+		elevatorHome = new JoystickButton (leftJoy, 1);
+		elevatorScale = new JoystickButton (leftJoy, 2);
+		elevatorSwitch = new JoystickButton(leftJoy, 3);		
 		shiftDown = new JoystickButton(leftJoy, 4);
 		shiftUp = new JoystickButton(leftJoy, 5);
-		switchDrive = new JoystickButton(leftJoy, 2);
 		
-		closeGrabber = new JoystickButton(rightJoy, 5);
-		takeInCube = new JoystickButton(rightJoy, 3);
-		spinWheelsOut = new JoystickButton(rightJoy, 2);
-		openGrabber = new JoystickButton (rightJoy, 4);
+
+		//Right joytick buttons
+		climb = new JoystickButton(rightJoy, 3);
+		reverseClimb = new JoystickButton(rightJoy, 2);
+		//spinWheelsOut = new JoystickButton(rightJoy, 2);
+		//takeInCube = new JoystickButton(rightJoy, 3);
+		//openGrabber = new JoystickButton (rightJoy, 4);
+		//closeGrabber = new JoystickButton(rightJoy, 5);
+		//spinWheelsOut = new JoystickButton(rightJoy, 6);
 		
 		
-		elevatorSwitch = new JoystickButton(leftJoy, 3);
-		elevatorScale = new JoystickButton (leftJoy, 2);
-		elevatorHome = new JoystickButton (leftJoy, 1);
+			
+		//Xbox controller buttons
+		
+//        elevatorHome = new JoystickButton(xbox, 1); //a button
+//		elevatorSwitch = new JoystickButton(xbox, 2); //b button	
+//		elevatorScale = new JoystickButton (xbox, 3); //x button
+		spinWheelsOut = new JoystickButton(xbox, 1); //y  button
+		openGrabber = new JoystickButton (xbox, 2); //top left trigger
+		takeInCube = new JoystickButton(xbox, 3); //top right trigger
+		closeGrabber = new JoystickButton(xbox, 4);
+		
+		
+		//Define commands for buttons
+		shiftUp.whenActive(new ShiftUpCommand());
+		shiftDown.whenActive(new ShiftDownCommand());
+		openGrabber.whenPressed(new OpenArmsCommand());
+		closeGrabber.whenPressed(new ClosedArmsCommand());
+		elevatorSwitch.whenPressed(new ElevatorToSwitchCommand());
+		elevatorScale.whenPressed(new ElevatorToScaleCommand());
+		elevatorHome.whenPressed(new ElevatorToHomeCommand());
+		takeInCube.whenPressed(new TakeInCubeCommandGroup());
+		spinWheelsOut.whenPressed(new EjectCubeCommandGroup());
+		climb.whileHeld(new ClimbCommand());
+		climb.whenReleased(new StopClimbCommand () );
+		reverseClimb.whileHeld(new ClimbReverseCommand());
+		reverseClimb.whenReleased(new StopClimbCommand());
+		
+		
+		//		shoot = new JoystickButton(rightJoy, 1);
+//		switchDrive = new JoystickButton(leftJoy, 2);
+		
 		//climb = new JoystickButton(leftJoy, 3);
 		//reverseClimb = new JoystickButton (leftJoy, 5);
 //		
@@ -84,22 +123,12 @@ public class OI {
 
 // 
 ////		
-		//climb.whileHeld(new ClimbCommand());
-//		climb.whenReleased(new StopClimbCommand () );
-//		reverseClimb.whileHeld(new ClimbReverseCommand());
-//		reverseClimb.whenReleased(new StopClimbCommand());
+
 	//	practiceEncoders.whenPressed(new PraticeEncoders());
-		shiftUp.whenActive(new ShiftUpCommand());
-		shiftDown.whenActive(new ShiftDownCommand());
 		//switchDrive.whenPressed(new SwitchDriveCommand());
-		openGrabber.whenPressed(new OpenArmsCommand());
-		closeGrabber.whenPressed(new ClosedArmsCommand());
 //		takeInCube.whenPressed(new TakeInCubeCommandGroup());
 //		spinWheelsOut.whileHeld(new SpinWheelsOutCommand());
 		
-		elevatorSwitch.whenPressed(new ElevatorToSwitchCommand());
-		elevatorScale.whenPressed(new ElevatorToScaleCommand());
-		elevatorHome.whenPressed(new ElevatorToHomeCommand());
 		
 		
 		//xbox buttons

@@ -58,6 +58,7 @@ public class ElevatorSubsystem extends Subsystem {
 		// */
 		inchesPerRev = RobotMap.kWinchDrumDia * 3.1415 * RobotMap.kMotorSprocketTeeth /
 				RobotMap.kDrumShaftSprocketTeeth;
+		inchesPerRev = inchesPerRev / 2.0;
 		encoderPulsesPerOutputRev = RobotMap.kEncoderPPR * RobotMap.kEncoderRatio;
 
 		
@@ -97,8 +98,8 @@ public class ElevatorSubsystem extends Subsystem {
 		 * rev/s = inches per sec / inches per revolution
 		 * velocity is encoder pules per 100ms = rev/s*PPR*GearRatio/10 ;
 		 */
-		m_motor.configMotionCruiseVelocity((int) RobotMap.kCruiseSpeedUp / (int) inchesPerRev * encoderPulsesPerOutputRev / 10, RobotMap.kTimeoutMs);
-		m_motor.configMotionAcceleration((int) RobotMap.kAccelerationUp / (int) inchesPerRev * encoderPulsesPerOutputRev / 10, RobotMap.kTimeoutMs);
+//		m_motor.configMotionCruiseVelocity((int) RobotMap.kCruiseSpeedUp / (int) inchesPerRev * encoderPulsesPerOutputRev / 10, RobotMap.kTimeoutMs);
+//		m_motor.configMotionAcceleration((int) RobotMap.kAccelerationUp / (int) inchesPerRev * encoderPulsesPerOutputRev / 10, RobotMap.kTimeoutMs);
 
 		
 		/* set motor2 follower */

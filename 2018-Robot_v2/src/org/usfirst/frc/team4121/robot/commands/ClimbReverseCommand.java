@@ -22,7 +22,13 @@ public class ClimbReverseCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.climber.climb(RobotMap.CLIMBER_REVERSE_SPEED);
+//    	if(!Robot.oi.limitSwitchClimbBottomStop.get()) //if tripped won't run
+//    	{
+//    	 Robot.climber.climb(0);
+//    	}
+    	
+    		 Robot.climber.climb(RobotMap.CLIMBER_REVERSE_SPEED);
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

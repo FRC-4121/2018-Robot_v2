@@ -9,7 +9,10 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class SpinWheelsInCommand extends Command {
-	private Timer armTimer = new Timer();
+	
+	private double startTime;
+	private double stopTime = 1.5;
+	private Timer wheelTimer = new Timer();
 
     public SpinWheelsInCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -18,29 +21,42 @@ public class SpinWheelsInCommand extends Command {
     	
     }
 
+    
     // Called just before this Command runs the first time
     protected void initialize() {
-    	armTimer.start();
+    	
+    	wheelTimer.start();
+    	startTime = wheelTimer.get();
+    	
     }
 
+    
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
     	Robot.end.endeffector(.5);
+    	
     }
 
+    
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-     	if(5<=armTimer.get()) //change time, once reaches five seconds command should stop
+    	
+    	boolean stopYet = false;
+    	
+     	if(stopTime <= (wheelTimer.get() - startTime)) //change time, once reaches five seconds command should stop
     	{
-    		return true;
+    		stopYet = true;
     	}
   
-        return false;
+        return stopYet;
       
     }
 
+    
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.end.endeffector(0);
     }
 
     // Called when another command which requires one or more of the same

@@ -43,15 +43,13 @@ public class EndEffector extends Subsystem {
     }
     public void openArms()
     {
-    	armSolenoid.set(DoubleSolenoid.Value.kForward);
+    	armSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
     public void closeArms()
     {
     	//if(!Robot.oi.limitSwitchEnd.get())
     	{
-    		endmotor1.set(0); //sets motor speed to 0
-        	endmotor2.set(0);
-        	armSolenoid.set(DoubleSolenoid.Value.kReverse);
+        	armSolenoid.set(DoubleSolenoid.Value.kForward);
     	}
     	
     }

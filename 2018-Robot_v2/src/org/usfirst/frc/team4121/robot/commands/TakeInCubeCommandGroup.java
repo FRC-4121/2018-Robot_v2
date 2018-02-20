@@ -8,8 +8,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class TakeInCubeCommandGroup extends CommandGroup {
 
     public TakeInCubeCommandGroup() {
-       addParallel(new ClosedArmsCommand());
-       addParallel(new SpinWheelsInCommand());
+       
+    	addSequential(new ClosedArmsCommand());
+    	addSequential(new SpinWheelsInCommand());
+    	
+    
+    	
+       //addSequential(new ElevatorToSwitchCommand());
 
     }
 }
