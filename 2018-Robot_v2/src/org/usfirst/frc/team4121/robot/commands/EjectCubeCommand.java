@@ -41,7 +41,7 @@ public class EjectCubeCommand extends Command {
     	if (robotSide == 'N' || robotSide == RobotMap.AUTO_SWITCH_POSITION)
     	{
         	Robot.end.endeffector(-1.0);
-        	Robot.end.openArms();
+        	//Robot.end.openArms();
     	}
     	    	
     }

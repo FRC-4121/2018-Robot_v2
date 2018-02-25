@@ -1,7 +1,5 @@
 package org.usfirst.frc.team4121.robot.commands;
 
-import org.usfirst.frc.team4121.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -14,15 +12,12 @@ public class AutoLeftSideCommandGroup extends CommandGroup {
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
-    	if (RobotMap.AUTO_SWITCH_POSITION== 'L')
-    	{
-    		addSequential(new AutoDrive(1,2,3,4));
-    		//addSequential drop box
-    	}
-    	else
-    	{
-    		addSequential(new AutoDrive(1,2,3,4));
-    	}
+    	addSequential(new BeginningMatchCommandGroup());
+//    	addSequential(new OpenServoCommand());
+    	addSequential(new ElevatorToSwitchCommand());
+    	addSequential(new AutoDrive(145, -1, 0, 7)); //drive to switch
+    	addSequential(new AutoTurn(85, 3, 'L'));
+    	addSequential(new EjectCubeCommand('L'));
 
         // To run multiple commands at the same time,
         // use addParallel()

@@ -69,7 +69,7 @@ public class DriveTrainSubsystem extends Subsystem {
 		
 		//right motor
 		rightMotorMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, RobotMap.kPIDLoopIdx, RobotMap.kTimeoutMs);
-		rightMotorMaster.setSensorPhase(RobotMap.kSensorPhase);
+		rightMotorMaster.setSensorPhase(RobotMap.kSensorPhase); //might need to change kSensorPhaseinRobotMap
 		rightMotorMaster.setInverted(RobotMap.kMotorInvert);
 		int absolutePositionRight = rightMotorMaster.getSensorCollection().getPulseWidthPosition();
 
@@ -98,23 +98,25 @@ public class DriveTrainSubsystem extends Subsystem {
 		{
 			drive.tankDrive(Robot.oi.leftJoy.getY()*RobotMap.DIRECTION_MULTIPLIER, Robot.oi.rightJoy.getY()*RobotMap.DIRECTION_MULTIPLIER);
 			//drive.tankDrive(Robot.oi.xbox.getY(Hand.kLeft)*RobotMap.DIRECTION_MULTIPLIER, Robot.oi.xbox.getY(Hand.kRight)*RobotMap.DIRECTION_MULTIPLIER);
-			SmartDashboard.putString("Direction multiplier: ", Integer.toString(RobotMap.DIRECTION_MULTIPLIER));			
-			SmartDashboard.putString("Left Joy Position: ", Double.toString(Robot.oi.leftJoy.getY()));
-			SmartDashboard.putString("Right Joy Position: ", Double.toString(Robot.oi.rightJoy.getY()));
+			//SmartDashboard.putString("Direction multiplier: ", Integer.toString(RobotMap.DIRECTION_MULTIPLIER));			
+			//SmartDashboard.putString("Left Joy Position: ", Double.toString(Robot.oi.leftJoy.getY()));
+			//SmartDashboard.putString("Right Joy Position: ", Double.toString(Robot.oi.rightJoy.getY()));
 		}
 		else
 		{
 			drive.tankDrive(Robot.oi.rightJoy.getY()*RobotMap.DIRECTION_MULTIPLIER, Robot.oi.leftJoy.getY()*RobotMap.DIRECTION_MULTIPLIER);
-			SmartDashboard.putString("Direction multiplier: ", Integer.toString(RobotMap.DIRECTION_MULTIPLIER));			
-			SmartDashboard.putString("Left Joy Position: ", Double.toString(Robot.oi.leftJoy.getY()));
-			SmartDashboard.putString("Right Joy Position: ", Double.toString(Robot.oi.rightJoy.getY()));
+			//SmartDashboard.putString("Direction multiplier: ", Integer.toString(RobotMap.DIRECTION_MULTIPLIER));			
+			//SmartDashboard.putString("Left Joy Position: ", Double.toString(Robot.oi.leftJoy.getY()));
+			//SmartDashboard.putString("Right Joy Position: ", Double.toString(Robot.oi.rightJoy.getY()));
 			// drive.tankDrive(Robot.oi.xbox.getY(Hand.kRight)*RobotMap.DIRECTION_MULTIPLIER, Robot.oi.xbox.getY(Hand.kLeft)*RobotMap.DIRECTION_MULTIPLIER); 
 		}
 		
 		
-		SmartDashboard.putNumber("Left Sensor position", leftMotorMaster.getSelectedSensorPosition(RobotMap.kPIDLoopIdx));
-		SmartDashboard.putNumber("Right Sensor position", rightMotorMaster.getSelectedSensorPosition(RobotMap.kPIDLoopIdx));
-
+//		SmartDashboard.putNumber("Left Sensor position", leftMotorMaster.getSelectedSensorPosition(RobotMap.kPIDLoopIdx));
+//		SmartDashboard.putNumber("Right Sensor position", rightMotorMaster.getSelectedSensorPosition(RobotMap.kPIDLoopIdx));
+		SmartDashboard.putNumber("Left Output", leftMotorMaster.getMotorOutputPercent());
+		SmartDashboard.putNumber("Right Output", rightMotorMaster.getMotorOutputPercent());
+		
 		drive.setSafetyEnabled(false);
 		
 		drive.setMaxOutput(0.8);

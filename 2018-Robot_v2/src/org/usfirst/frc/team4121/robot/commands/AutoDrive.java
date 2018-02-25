@@ -19,7 +19,8 @@ public class AutoDrive extends Command {
 	double direction; //-1=Reverse, +1=Forward(reverse is for gear forward is for shooting)
 	double targetAngle;  //drive angle
 	double stopTime;  //time out time
-	double angleCorrection;
+	double angleCorrection, angleError;
+	double startTime;
 
 	PIDControl pidControl;
 	
@@ -41,10 +42,11 @@ public class AutoDrive extends Command {
     	direction = dir;
     	targetAngle = ang;
     	stopTime = time;
+    	
 
     	
     	//Set up PID control
-    pidControl = new PIDControl(RobotMap.kP_Straight, RobotMap.kI_Straight, RobotMap.kD_Straight);
+    	pidControl = new PIDControl(RobotMap.kP_Straight, RobotMap.kI_Straight, RobotMap.kD_Straight);
     	
 //    	pidOutput = new PIDOutput() {
 //    		
@@ -67,9 +69,11 @@ public class AutoDrive extends Command {
     	
         Robot.distanceTraveled = 0.0;
         timer.start();
+        startTime= timer.get();
         leftEncoderStart = Robot.driveTrain.getLeftEncoderPosition();
         rightEncoderStart = Robot.driveTrain.getRightEncoderPosition();
         angleCorrection = 0;
+        angleError = 0;
         
     }
 
@@ -77,9 +81,11 @@ public class AutoDrive extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	angleCorrection = pidControl.Run(Robot.oi.MainGyro.getAngle(), targetAngle);
-//    	angleCorrection= RobotMap.kD_Straight*(Robot.oi.MainGyro.getAngle()-targetAngle);
-    	Robot.driveTrain.autoDrive(direction*RobotMap.AUTO_DRIVE_SPEED - angleCorrection, direction*RobotMap.AUTO_DRIVE_SPEED + angleCorrection);    	    	
+//    	angleCorrection = pidControl.Run(Robot.oi.MainGyro.getAngle(), targetAngle);
+    	angleError = Robot.oi.MainGyro.getAngle()-targetAngle;
+    	angleCorrection = RobotMap.kP_Straight*angleError;
+    	Robot.driveTrain.autoDrive(direction*RobotMap.AUTO_DRIVE_SPEED + angleCorrection, direction*RobotMap.AUTO_DRIVE_SPEED - angleCorrection);    	    	
+		SmartDashboard.putString("Angle Correction", Double.toString(angleCorrection));
 
     }
 
@@ -90,7 +96,7 @@ public class AutoDrive extends Command {
     	boolean thereYet = false;
  
     	//Check elapsed time
-    	if(stopTime<=timer.get())
+    	if(stopTime<=timer.get()-startTime)
     	{
     		
     		//Too much time has elapsed.  Stop this command.
@@ -113,7 +119,10 @@ public class AutoDrive extends Command {
     		SmartDashboard.putString("Right encoder position: ", Integer.toString(Robot.driveTrain.getRightEncoderPosition()));
     		SmartDashboard.putString("Total rotations left: ", Integer.toString(totalRotationsLeft));
     		SmartDashboard.putString("Total rotations right: ", Integer.toString(totalRotationsRight));
-			SmartDashboard.putString("Distance traveled: ", Double.toString(Robot.distanceTraveled));			
+			SmartDashboard.putString("Distance traveled: ", Double.toString(Robot.distanceTraveled));	
+			SmartDashboard.putString("Drive Angle:", Double.toString(Robot.oi.MainGyro.getAngle()));
+			SmartDashboard.putString("Angle Error", Double.toString(angleError));
+
     		
 			if (targetDistance <= Robot.distanceTraveled)
     		{

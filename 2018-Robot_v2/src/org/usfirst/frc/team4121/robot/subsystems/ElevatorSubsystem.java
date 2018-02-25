@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -39,7 +40,8 @@ public class ElevatorSubsystem extends Subsystem {
 	public double targetPosSwitch ;
 	public double targetPosScale ;
 	public double bumpUp ;
-	public double bumpDn ;
+	public double bumpDn;
+
 
 	private boolean initMotors = initElevatorControls();
 
@@ -64,7 +66,7 @@ public class ElevatorSubsystem extends Subsystem {
 		
 		/* first choose the sensor */
 		m_motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, RobotMap.kTimeoutMs);
-		m_motor.setSensorPhase(true);
+		m_motor.setSensorPhase(true); //may have to change back to true
 
 		
 		/* Set relevant frame periods to be at least as fast as periodic rate*/
@@ -180,41 +182,41 @@ public class ElevatorSubsystem extends Subsystem {
 			m_motor.configMotionAcceleration((int) accelDn, RobotMap.kTimeoutMs);
 			m_motor.set(ControlMode.MotionMagic, targetPos);
 		}
+		SmartDashboard.putNumber("Elevator Encoder:", m_motor.getSelectedSensorPosition(RobotMap.ELEVATOR_MOTOR_MASTER));
 	}
 	
 /* new functions here - bump up and bump down */
 
 	public void bumpUp() // bump up bump up distance
 	{
-		if(targetPos+12>RobotMap.dPosScale)
-		{
-			//do nothinh because will go to high
-		}
-		else
-		{
 		targetPos += bumpUp ;
+		if(targetPos > targetPosScale) //if trying to go outside of max height range, will just run to scale
+		{
+			targetPos = targetPosScale;
+		}
+		
 		m_motor.configMotionCruiseVelocity((int) cruiseVelocityUp, RobotMap.kTimeoutMs);
 		m_motor.configMotionAcceleration((int) accelUp, RobotMap.kTimeoutMs);
 		m_motor.set(ControlMode.MotionMagic, targetPos);
-		}
-	}
-
-	public void bumpDown() // bump down height
-	{
-		if(targetPos-12 < 0)
-		{
-			//do nothing
-		}
-		else
-		{
-			targetPos += bumpDn ;
-			m_motor.configMotionCruiseVelocity((int) cruiseVelocityDn, RobotMap.kTimeoutMs);
-			m_motor.configMotionAcceleration((int) accelDn, RobotMap.kTimeoutMs);
-			m_motor.set(ControlMode.MotionMagic, targetPos);
-		}
 		
 	}
 
+	
+	public void bumpDown() // bump down height
+	{
+		targetPos += bumpDn ;
+		if(targetPos < 0) //change 12 to match bumpDown value
+		{
+			targetPos = 0;
+		}
+		
+		m_motor.configMotionCruiseVelocity((int) cruiseVelocityDn, RobotMap.kTimeoutMs);
+		m_motor.configMotionAcceleration((int) accelDn, RobotMap.kTimeoutMs);
+		m_motor.set(ControlMode.MotionMagic, targetPos);
+		
+	}
+
+	
 	public void goToHome() // go to home
 	{
 		targetPos = 0;

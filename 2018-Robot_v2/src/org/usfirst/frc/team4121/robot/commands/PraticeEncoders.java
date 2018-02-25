@@ -28,8 +28,8 @@ public class PraticeEncoders extends CommandGroup {
         // arm.
     	//addSequential (new AutoTurn(90, 20));
 	//addSequential (new ShiftUpCommand());
- 	addSequential(new AutoDrive(60.00, -1, 0, 10));
- 	addSequential (new AutoTurn(-45, 10));
+ 	addSequential(new AutoDrive(150.00, -1, 0, 10));
+ 	addSequential (new AutoTurn(80, 10, 'N'));
  	// addSequential (new AutoTurn(-45, 10));
     }
 }

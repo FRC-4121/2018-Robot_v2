@@ -1,12 +1,12 @@
 package org.usfirst.frc.team4121.robot.subsystems;
 
-import org.usfirst.frc.team4121.robot.Robot;
 import org.usfirst.frc.team4121.robot.RobotMap;
 
-import com.ctre.phoenix.motorcontrol.can.*;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -16,10 +16,13 @@ public class EndEffector extends Subsystem {
 
 	public WPI_TalonSRX endmotor1 = new WPI_TalonSRX(RobotMap.ENDMOTOR1);
 	public WPI_TalonSRX endmotor2 = new WPI_TalonSRX(RobotMap.ENDMOTOR2);
+	public Servo leftServo = new Servo(0);
+	public Servo rightServo = new Servo(1);
+	
 	
 	//solenoid setup
 	Compressor compressor = new Compressor(RobotMap.COMPRESSOR); //change this value
-	public DoubleSolenoid armSolenoid = new DoubleSolenoid(0,1);
+	public DoubleSolenoid armSolenoid = new DoubleSolenoid(2,3);
 	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -31,8 +34,8 @@ public class EndEffector extends Subsystem {
     
     //sets wheels spinning
     public void endeffector(double endspeed) {
-    	endmotor1.set(endspeed);
-    	endmotor2.set(-endspeed);//make one of these to be negative to account for difference in spin
+    	endmotor1.set(-endspeed);
+    	endmotor2.set(endspeed);//for competition this should be negative
     	
     }
     //stops wheels with limit switch 
@@ -52,6 +55,16 @@ public class EndEffector extends Subsystem {
         	armSolenoid.set(DoubleSolenoid.Value.kForward);
     	}
     	
+    }
+    
+    public void openServos() {
+    	leftServo.set(.5);
+    	rightServo.set(.5);
+    }
+    
+    public void closeServos() {
+    	leftServo.set(0);
+    	rightServo.set(.9);
     }
   
 }
