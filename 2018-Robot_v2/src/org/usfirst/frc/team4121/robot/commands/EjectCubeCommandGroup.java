@@ -26,7 +26,7 @@ public class EjectCubeCommandGroup extends CommandGroup {
         // arm.
     	addSequential(new SpinWheelsOutCommand());
     	addSequential(new OpenArmsCommand());
-    	addSequential(new ElevatorToHomeCommand());
+    	//addSequential(new ElevatorToHomeCommand());
     	
     }
 }
