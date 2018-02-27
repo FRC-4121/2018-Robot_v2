@@ -294,10 +294,10 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		
-		SmartDashboard.putNumber("Master Current", Robot.elevator.m_motor.getOutputCurrent());
-		SmartDashboard.putNumber("Slave Current", Robot.elevator.m_motor2_follower.getOutputCurrent());
-		SmartDashboard.putNumber("Master Output", Robot.elevator.m_motor.getMotorOutputPercent());
-		SmartDashboard.putNumber("Slave Output", Robot.elevator.m_motor2_follower.getMotorOutputPercent());
+//		SmartDashboard.putNumber("Master Current", Robot.elevator.m_motor.getOutputCurrent());
+//		SmartDashboard.putNumber("Slave Current", Robot.elevator.m_motor2_follower.getOutputCurrent());
+//		SmartDashboard.putNumber("Master Output", Robot.elevator.m_motor.getMotorOutputPercent());
+//		SmartDashboard.putNumber("Slave Output", Robot.elevator.m_motor2_follower.getMotorOutputPercent());
 
 		SmartDashboard.putNumber("Elevator Current Position", Robot.elevator.targetPos); //outputs how high elevator is 
 		//Start scheduler
@@ -312,6 +312,9 @@ public class Robot extends IterativeRobot {
 //		SmartDashboard.putString("Left Drive Distance (in inches): ", Double.toString(Robot.oi.leftEncoder.getDistance()));		
 		//SmartDashboard.putString("Limit Switch: ", Boolean.toString(Robot.oi.limitSwitch.get()));
 	//	SmartDashboard.putString("Drive Angle: ", Double.toString(Robot.oi.MainGyro.getAngle()));
+		SmartDashboard.putBoolean("Limit Switch Bottom", Robot.oi.limitSwitchClimbBottomStop.get());
+		SmartDashboard.putBoolean("Limit Switch Top", Robot.oi.limitSwitchClimbUpperStop.get());
+		
 
 
 	}
