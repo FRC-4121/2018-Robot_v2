@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -16,8 +17,8 @@ public class EndEffector extends Subsystem {
 
 	public WPI_TalonSRX endmotor1 = new WPI_TalonSRX(RobotMap.ENDMOTOR1);
 	public WPI_TalonSRX endmotor2 = new WPI_TalonSRX(RobotMap.ENDMOTOR2);
-	public Servo leftServo = new Servo(0);
-	public Servo rightServo = new Servo(1);
+	public Servo leftServo = new Servo(8);
+	public Servo rightServo = new Servo(9);
 	
 	
 	//solenoid setup
@@ -58,8 +59,9 @@ public class EndEffector extends Subsystem {
     }
     
     public void openServos() {
-    	leftServo.set(.5);
+    	leftServo.set(.5);//.5
     	rightServo.set(.5);
+    
     }
     
     public void closeServos() {

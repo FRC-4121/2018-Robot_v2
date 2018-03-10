@@ -145,7 +145,7 @@ public class DriveTrainSubsystem extends Subsystem {
 		
 		drive.setMaxOutput(0.8);
 		
-		drive.tankDrive(leftMotorSpeed, rightMotorSpeed);
+		drive.tankDrive(leftMotorSpeed, rightMotorSpeed*.95);
 		
 	}
 	

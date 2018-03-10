@@ -1,38 +1,31 @@
-
 package org.usfirst.frc.team4121.robot;
 
+import org.usfirst.frc.team4121.robot.commands.AutoLeftSideCommandGroup;
+import org.usfirst.frc.team4121.robot.commands.AutoLeftSidePivotCommandGroup;
+import org.usfirst.frc.team4121.robot.commands.AutoRightSideNoTurnCommandGroup;
+import org.usfirst.frc.team4121.robot.commands.AutoScaleLeftSideCommandGroup;
+import org.usfirst.frc.team4121.robot.commands.AutoScaleRightSideCommandGroup;
 import org.usfirst.frc.team4121.robot.commands.AutoStopCommand;
 import org.usfirst.frc.team4121.robot.commands.AutoStraightCommandGroup;
-import org.usfirst.frc.team4121.robot.commands.AutoLeftSideCommandGroup;
-import org.usfirst.frc.team4121.robot.commands.AutoRightSideCommandGroup;
-import org.usfirst.frc.team4121.robot.commands.AutoRightSideNoTurnCommandGroup;
-import org.usfirst.frc.team4121.robot.commands.AutoTurnLeftCommandGroup;
-import org.usfirst.frc.team4121.robot.commands.AutoTurnRightCommandGroup;
+import org.usfirst.frc.team4121.robot.commands.LogicTestCommandGroup;
 import org.usfirst.frc.team4121.robot.subsystems.ClimberSubsystem;
 import org.usfirst.frc.team4121.robot.subsystems.DriveTrainSubsystem;
 import org.usfirst.frc.team4121.robot.subsystems.ElevatorSubsystem;
 import org.usfirst.frc.team4121.robot.subsystems.EndEffector;
 import org.usfirst.frc.team4121.robot.subsystems.ShifterSubsystem;
 
-import org.usfirst.frc.team4121.robot.commands.PraticeEncoders;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.networktables.*;
 
-//adding a test to see if this works
 
 /**
   * The VM is configured to automatically run this class, and to call the
@@ -51,6 +44,7 @@ public class Robot extends IterativeRobot {
 	public static CameraServer server;
 	
 	//Network tables
+	
 	public static NetworkTableInstance dataTableInstance;
 	public static NetworkTable visionTable;
 	public static NetworkTable navxTable;
@@ -91,17 +85,6 @@ public class Robot extends IterativeRobot {
 	public static String gameData;
 	public static String switchTargetPosition;
 	
-	//elevator code Mr.Dermiggio
-   // private static final int kMotorPort = 0;
-   // private static final int kXboxPort = 0;
-
-    //private XboxController m_xboxController; don't think we need this
-    private double targetPos = 0;
-    private double oldTargetPos;
-    private double inchesPerRev;
-    private int encoderPulsesPerOutputRev; // number of motor encoders pulses per encoder output revolution
-
-
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -114,6 +97,7 @@ public class Robot extends IterativeRobot {
 		visionTable = dataTableInstance.getTable("vision");
 		navxTable = dataTableInstance.getTable("navx");
 		
+		//NetworkTable Entries
 		robotStop = visionTable.getEntry("RobotStop");
 		cubeAngle = visionTable.getEntry("cubeAngle");
 		cubeDistance = visionTable.getEntry("cubeDistance");
@@ -123,12 +107,11 @@ public class Robot extends IterativeRobot {
 		xVelocity = navxTable.getEntry("XVelocity");
 		yDisplacement = navxTable.getEntry("YDisplacement");
 		xDisplacement = navxTable.getEntry("XDisplacement");
-		
 		gyroInit = navxTable.getEntry("gyroInit");
 
-		robotStop.setDouble(0.0);
-		gyroInit.setDouble(1.0);		
-		
+		//robotStop.setDouble(0.0);
+		//gyroInit.setDouble(1.0);		
+
 		//Initialize subsystems		
 		driveTrain = new DriveTrainSubsystem();
 		shifter = new ShifterSubsystem();
@@ -137,46 +120,42 @@ public class Robot extends IterativeRobot {
 		elevator = new ElevatorSubsystem();
 		oi = new OI();
 		
-		//Camera Server
+		//Camera Server setup
 		server = CameraServer.getInstance();
 		cam = new UsbCamera("Main Camera", 0);
-		
 		server.addCamera(cam);
 		cam.setResolution(320, 240);
-		
 		server.startAutomaticCapture(cam);
 		
-		
 		//Initialize dashboard choosers
+		//!!Update this to reflect any new auto code!!
 		chooser = new SendableChooser<>();
 		chooser.addDefault("Straight", new AutoStraightCommandGroup());
 		chooser.addObject("Left Turn", new AutoLeftSideCommandGroup());
-		chooser.addObject("Right Turn", new AutoRightSideCommandGroup());
+		chooser.addObject("Left Straight (ish)", new AutoLeftSidePivotCommandGroup());
 		chooser.addObject("Right Straight", new AutoRightSideNoTurnCommandGroup());
 		chooser.addObject("Do nothing", new AutoStopCommand());
-		//chooser.addDefault("Left Side Default", new AutoLeftSideCommandGroup());
-		SmartDashboard.putData("Auto mode", chooser);
-		
-		
-		//Calibrate the main gyro
-		Robot.oi.MainGyro.calibrate();
-		Robot.oi.MainGyro.reset();
-		
+		chooser.addObject("Logic Tester", new LogicTestCommandGroup());
+		chooser.addObject("Left Scale", new AutoScaleLeftSideCommandGroup());
+		chooser.addObject("Right Scale", new AutoScaleRightSideCommandGroup());
+		SmartDashboard.putData("Auto Mode:", chooser);
 		
 		//Initialize variables
 		distanceTraveled = 0.0;
 		angleTraveled = 0.0;
 		
-		//init servos
+		//Ensure servos are closed
 		Robot.end.closeServos();
 		
 	}
 	
 
 	void Disabled() {
+		
 		while(isDisabled()) {
 			
 		}
+		
 	}
 
 	
@@ -187,7 +166,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		robotStop.setDouble(1.0);
+		
+		//robotStop.setDouble(1.0);
 
 	}
 
@@ -212,41 +192,30 @@ public class Robot extends IterativeRobot {
 	 * chooser code above (like the commented example) or additional comparisons
 	 * to the switch structure below with additional strings & commands.
 	 */
+	
 	@Override
 	public void autonomousInit() {
 		
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
+		//Calibrate the main gyro
+		Robot.oi.MainGyro.calibrate();
+		Robot.oi.MainGyro.reset();
 		
-//		String gameData;
+		//grab gameData
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		RobotMap.AUTO_SWITCH_POSITION = gameData.charAt(0);
-//		RobotMap.AUTO_SCALE_POSITION = gameData.charAt(1);
-		SmartDashboard.putString("First Character in String", Character.toString(RobotMap.AUTO_SWITCH_POSITION) );
-	
+		RobotMap.AUTO_SCALE_POSITION = gameData.charAt(1);
 
 		//Get selected autonomous command
 		autonomousCommand = chooser.getSelected();
 		
-//		//Reset encoders
-	
-	
+		//Reset encoders
 		RobotMap.LEFT_STARTING_POSITION = Robot.driveTrain.getLeftEncoderPosition();
 		RobotMap.RIGHT_STARTING_POSITION = Robot.driveTrain.getRightEncoderPosition();
-//		
-//		gameData = DriverStation.getInstance().getGameSpecificMessage(); //get this data from the field people
-//		RobotMap.AUTO_SWITCH_POSITION = gameData.charAt(0); 
-//		
 
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null) {
 			autonomousCommand.start();
 		}
-		
 	}
 	
 	
@@ -260,12 +229,11 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		
 		//Put key values on smart dashboard
-//		SmartDashboard.putString("Left Drive Distance: ", Double.toString(Robot.oi.leftEncoder.getDistance()));
-//		SmartDashboard.putString("Right Drive Distance: ", Double.toString(Robot.oi.rightEncoder.getDistance()));
+		
+		//SmartDashboard.putString("Left Drive Distance: ", Double.toString(Robot.oi.leftEncoder.getDistance()));
+		//SmartDashboard.putString("Right Drive Distance: ", Double.toString(Robot.oi.rightEncoder.getDistance()));
 		SmartDashboard.putString("Gear Position: ", shifter.gearPosition());
-
 	}
-
 	
 	@Override
 	public void teleopInit() {
@@ -278,55 +246,40 @@ public class Robot extends IterativeRobot {
 			autonomousCommand.cancel();
 		}
 		Scheduler.getInstance().removeAll();
-		
-		//Robot.gearCam.setBrightness(100);
-		
-		//Reset encoders
-//		Robot.oi.rightEncoder.reset();
-//		Robot.oi.leftEncoder.reset();
-		
 	}
 
-	
 	/**
 	 * This function is called periodically during operator control
 	 */
 	@Override
 	public void teleopPeriodic() {
 		
-//		SmartDashboard.putNumber("Master Current", Robot.elevator.m_motor.getOutputCurrent());
-//		SmartDashboard.putNumber("Slave Current", Robot.elevator.m_motor2_follower.getOutputCurrent());
-//		SmartDashboard.putNumber("Master Output", Robot.elevator.m_motor.getMotorOutputPercent());
-//		SmartDashboard.putNumber("Slave Output", Robot.elevator.m_motor2_follower.getMotorOutputPercent());
-
-		SmartDashboard.putNumber("Elevator Current Position", Robot.elevator.targetPos); //outputs how high elevator is 
 		//Start scheduler
 		Scheduler.getInstance().run();
  
-		//Put key values on the smart dashboard
-		SmartDashboard.putString("Gear Position: ", shifter.gearPosition());
+		//Put key values on the SmartDashboard
+		SmartDashboard.putString("Gear Postion: ", shifter.gearPosition());
 		SmartDashboard.putString("Drive Direction:", Integer.toString(RobotMap.DIRECTION_MULTIPLIER));		
-		
 		SmartDashboard.putNumber("Gyro Reading:", oi.MainGyro.getAngle());
-//		SmartDashboard.putString("Right Drive Distance (in inches): ", Double.toString(Robot.oi.rightEncoder.getDistance()));
-//		SmartDashboard.putString("Left Drive Distance (in inches): ", Double.toString(Robot.oi.leftEncoder.getDistance()));		
+		//SmartDashboard.putNumber("Master Current", Robot.elevator.m_motor.getOutputCurrent());
+		//SmartDashboard.putNumber("Slave Current", Robot.elevator.m_motor2_follower.getOutputCurrent());
+		//SmartDashboard.putNumber("Master Output", Robot.elevator.m_motor.getMotorOutputPercent());
+		//SmartDashboard.putNumber("Slave Output", Robot.elevator.m_motor2_follower.getMotorOutputPercent());
+		SmartDashboard.putNumber("Elevator Current Position", Robot.elevator.targetPos);
+		//SmartDashboard.putString("Right Drive Distance (in inches): ", Double.toString(Robot.oi.rightEncoder.getDistance()));
+		//SmartDashboard.putString("Left Drive Distance (in inches): ", Double.toString(Robot.oi.leftEncoder.getDistance()));		
 		//SmartDashboard.putString("Limit Switch: ", Boolean.toString(Robot.oi.limitSwitch.get()));
-	//	SmartDashboard.putString("Drive Angle: ", Double.toString(Robot.oi.MainGyro.getAngle()));
-		SmartDashboard.putBoolean("Limit Switch Bottom", Robot.oi.limitSwitchClimbBottomStop.get());
-		SmartDashboard.putBoolean("Limit Switch Top", Robot.oi.limitSwitchClimbUpperStop.get());
-		
-
-
+		//SmartDashboard.putString("Drive Angle: ", Double.toString(Robot.oi.MainGyro.getAngle()));
+	
 	}
 	
 
 	/**
 	 * This function is called periodically during test mode
 	 */
+	
 	@Override
-	public void testPeriodic() {
-		
-		
+	public void testPeriodic() {	
 		
 	}
 }

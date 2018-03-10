@@ -11,8 +11,8 @@ public class AutoRightSideNoTurnCommandGroup extends CommandGroup {
     	//
     	addSequential(new BeginningMatchCommandGroup());
     	//addSequential(new ShiftUpCommand());
-    	addSequential(new ElevatorToSwitchCommand());
-    	addSequential(new AutoDrive(90, -1, 0, 7)); //drive to switch
+    	addSequential(new toSwitchAutoCommand('R'));
+    	addSequential(new AutoDrive(80, -1, 0, 7)); //drive to switch
     	addSequential(new EjectCubeCommand('R'));
     }
 }

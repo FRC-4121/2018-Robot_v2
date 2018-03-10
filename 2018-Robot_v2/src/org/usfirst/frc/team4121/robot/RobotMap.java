@@ -11,51 +11,34 @@ package org.usfirst.frc.team4121.robot;
 public class RobotMap {
 
 	//Motor Controller Constants - Practice Robot
-	public static final int LEFT_MOTOR_MASTER = 0;
+	//public static final int LEFT_MOTOR_MASTER = 0;
+	//public static final int LEFT_MOTOR_SLAVE = 15;
+	//public static final int RIGHT_MOTOR_MASTER = 4;
+	//public static final int RIGHT_MOTOR_SLAVE = 3;
+	//public static final int CLIMBER1 = 2;
+	//public static final int ENDMOTOR1 = 8;
+	//public static final int ENDMOTOR2 = 1; /
+	//public static final int ELEVATOR_MOTOR_MASTER = 6;
+	//public static final int ELEVATOR_MOTOR_SLAVE = 7;
+
+	//Motor Controller Constants - Competition Robots
+	public static final int LEFT_MOTOR_MASTER = 7;
 	public static final int LEFT_MOTOR_SLAVE = 15;
 	public static final int RIGHT_MOTOR_MASTER = 4;
-	public static final int RIGHT_MOTOR_SLAVE = 3;
-	public static final int CLIMBER1 = 2;
-	public static final int ENDMOTOR1 = 8;
-	public static final int ENDMOTOR2 = 1; 
-	public static final int ELEVATOR_MOTOR_MASTER = 6;
-	public static final int ELEVATOR_MOTOR_SLAVE = 7;
-
-	
-
-//	//Motor Controller Constants - Competition Robots
-//	public static final int LEFT_MOTOR_MASTER = 7;
-//	public static final int LEFT_MOTOR_SLAVE = 15;
-//	public static final int RIGHT_MOTOR_MASTER = 4;
-//	public static final int RIGHT_MOTOR_SLAVE = 1;
-//	public static final int CLIMBER1 = 8;
-//	public static final int ENDMOTOR1 = 6;
-//	public static final int ENDMOTOR2 = 3; 
-//	public static final int ELEVATOR_MOTOR_MASTER = 2;
-//	public static final int ELEVATOR_MOTOR_SLAVE = 0;
-
-	
-	public static final int kXboxPort = 2;
-	public static final int A = 1;
-	public static final int B = 2;
-	public static final int Y = 3;
-	public static final int PADUP = 4;
-	public static final int PADDOWN = 5;
-	public static final int LT = 6;
-	public static final int RT = 7;
-	public static final int RB = 8;
-
-
+	public static final int RIGHT_MOTOR_SLAVE = 1;
+	public static final int CLIMBER1 = 8;
+	public static final int ENDMOTOR1 = 6;
+	public static final int ENDMOTOR2 = 3; 
+	public static final int ELEVATOR_MOTOR_MASTER = 2;
+	public static final int ELEVATOR_MOTOR_SLAVE = 0;
 
 	//Motor Speeds
 	public static final double END_EFFECTOR_SPEED = .5; 
 	public static final double DRIVE_SPEED = 0.8;
-	public static double AUTO_DRIVE_SPEED = 0.8;//changed from .8
+	public static double AUTO_DRIVE_SPEED = 0.8;
 	public static double AUTO_TURN_SPEED = 0.6;
-	public static double SHOOTER_SPEED = -.6;//can change later depending on speed
-	public static double CLIMBER_SPEED = -.6;//can change later depending on speed, should be negative
-	public static double CLIMBER_REVERSE_SPEED = .6; //should be positive
-
+	public static double CLIMBER_SPEED = -1.0; //should be negative
+	public static double CLIMBER_REVERSE_SPEED = 1.0; //should be positive
 
 	//Miscellaneous
 	public static int DIRECTION_MULTIPLIER = 1;
@@ -64,7 +47,6 @@ public class RobotMap {
 	public static double TURN_ANGLE_TOLERANCE = .001;
 	public static char AUTO_SWITCH_POSITION;
 	public static char AUTO_SCALE_POSITION;
-
 
 	//PID values
 	public static double kP_Straight = 0.02;
@@ -75,11 +57,10 @@ public class RobotMap {
 	public static double kD_Turn = 0.0;
 
 	//Camera Image Values
-	public static final int IMG_WIDTH = 320;
-	public static final int IMG_HEIGHT = 240;
+	public static final int IMG_WIDTH = 160;
+	public static final int IMG_HEIGHT = 120;
 
-
-	//encoder stuff
+	//encoder constants
 	public static boolean kSensorPhase = false;
 	public static boolean kMotorInvert = false;
 	public static final int kPIDLoopIdx = 0;
@@ -88,50 +69,50 @@ public class RobotMap {
 	public static int RIGHT_STARTING_POSITION = 0;
 	public static int DRIVE_GEAR_RATIO = 5;
 
-	//stuff for elevator
-	/* Elevator target positions */
+	//Elevator target positions
 	public static final double dPosSwitch = 30 ;
-	public static final double dPosScale = 78;
+	public static final double dPosScale = 74;
 	public static final double dPosBumpUp = 2 ;
 	public static final double dPosBumpDown = -2 ;
-
 	public static final double dFudgeFactor = 1.135 ;  // actual distance/programmed distance
 
-	/* Elevator drive ratios */
+	//Elevator drive ratios
 	public static final int kMotorGearRatio = 5 ;
 	public static final int kEncoderRatio = 1 ; //ratio of encoder revs to output revs
 	public static final int kMotorSprocketTeeth = 12 ;
 	public static final int kDrumShaftSprocketTeeth = 12 ;
 	public static final double kWinchDrumDia = 0.5 ;
 
-	/* Motor encoder info */
+	//Motor encoder info
 	public static final int kEncoderPPR = 4096 ;  // encoder pulses per revolution
 
-	/* PID constants */
+	//PID constants
 	public static final double kf = 0.5 ;
 	public static final double kp = 0.25 ;
 	public static final double ki = 0 ;
 	public static final double kd = 7 ;
 
-	/* Motion magic motion parameters */
-	/* Test values only - for real try to increase 4x by competition */
+	/* 
+	 * Motion magic motion parameters
+	 * Test values only - for real try to increase 4x by competition 
+	 */
 
 	public static final double kCruiseSpeed = 50.0 ; // inches per sec
 	public static final double kAcceleration = 30.0 ; // inches/s^2
 
-	public static final double kCruiseSpeedUp = 80.0 ; // inches per sec  
-	public static final double kAccelerationUp = 80.0 ; // inches/s^2
-
-	/* speed and acceleration down need to be set to keep tension on the cable */
-	/* g = 386.4 in/s^ */
-
+	public static final double kCruiseSpeedUp = 40.0 ; // inches per sec  
+	public static final double kAccelerationUp = 40.0 ; // inches/s^2
 	public static final double kCruiseSpeedDown = 20.0 ; // inches per sec
 	public static final double kAccelerationDown = 10.0 ; // inches/s^2
 
-	/* motor IDS */
+	/* 
+	 * speed and acceleration down need to be set to keep tension on the cable
+	 * g = 386.4 in/s^2 
+	 */
+	
+	//motor IDS
 	public static final int kMotorPort = 0;
 	public static final int kMotor2Port = 1 ;
-
 	public static final int kMaxMotorCurrent = 35 ;
 	public static final int kPeakMotorCurrent = 55 ;
 

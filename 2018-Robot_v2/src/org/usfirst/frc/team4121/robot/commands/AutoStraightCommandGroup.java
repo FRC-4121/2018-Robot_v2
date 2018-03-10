@@ -12,6 +12,7 @@ public class AutoStraightCommandGroup extends CommandGroup {
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
-    	addSequential(new AutoDrive(125, 1, 0, 7)); 
+    	addSequential(new BeginningMatchCommandGroup());
+    	addSequential(new AutoDrive(110, -1, 0, 7)); 
     }
 }

@@ -43,11 +43,11 @@ public class DriveToScaleCommand extends Command {
     	
     	if(robotStartPos == RobotMap.AUTO_SCALE_POSITION) {
         	
-    		distance = 147; //distance to drop into scale
+    		distance = 260; //distance to drop into scale
 
     	} else {
     		
-    		distance = 130;//distance to stop before opposing null territory
+    		distance = 160;//otherwise cross the auto line and get into a position to attack the scale
     		
     	}
     	

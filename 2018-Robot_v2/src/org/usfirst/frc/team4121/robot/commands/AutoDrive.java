@@ -10,27 +10,21 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- *
- */
 public class AutoDrive extends Command {
 	
-	double targetDistance; //Make global
-	double direction; //-1=Reverse, +1=Forward(reverse is for gear forward is for shooting)
+	double targetDistance; 
+	double direction; //-1 = Reverse, +1 = Forward (reverse is for gear forward is for shooting)
 	double targetAngle;  //drive angle
-	double stopTime;  //time out time
+	double stopTime;  //timeout time
 	double angleCorrection, angleError;
 	double startTime;
-
-	PIDControl pidControl;
 	
-
+	PIDControl pidControl;
 
 	public Timer timer = new Timer();
 	
 	public int leftEncoderStart;
 	public int rightEncoderStart;
-
 	
 	//Class constructor
     public AutoDrive(double dis, double dir, double ang, double time) { //intakes distance, direction, angle, and stop time
@@ -42,14 +36,12 @@ public class AutoDrive extends Command {
     	direction = dir;
     	targetAngle = ang;
     	stopTime = time;
-    	
-
-    	
+    	    	
     	//Set up PID control
     	pidControl = new PIDControl(RobotMap.kP_Straight, RobotMap.kI_Straight, RobotMap.kD_Straight);
     	
-//    	pidOutput = new PIDOutput() {
-//    		
+    	//pidOutput = new PIDOutput() {
+//	
 //    		@Override
 //    		public void pidWrite(double d) {
 //    			Robot.driveTrain.autoDrive(direction*RobotMap.AUTO_DRIVE_SPEED - d, direction*RobotMap.AUTO_DRIVE_SPEED + d);
@@ -150,7 +142,11 @@ public class AutoDrive extends Command {
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+    
     protected void interrupted() {
+    	
     	//Robot.driveTrain.pid.disable();
+    	
     }
+    
 }
