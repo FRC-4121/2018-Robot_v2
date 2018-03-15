@@ -27,6 +27,7 @@ import org.usfirst.frc.team4121.robot.commands.TakeInCubeCommandGroup;
 import org.usfirst.frc.team4121.robot.commands.ClosedArmsCommand;
 import org.usfirst.frc.team4121.robot.commands.EjectCubeCommandGroup;
 import org.usfirst.frc.team4121.robot.commands.ElevatorToHomeCommand;
+import org.usfirst.frc.team4121.robot.commands.ElevatorToPyramid;
 import org.usfirst.frc.team4121.robot.commands.ElevatorToScaleCommand;
 import org.usfirst.frc.team4121.robot.commands.ElevatorToSwitchCommand;
 import org.usfirst.frc.team4121.robot.commands.OpenArmsCommand;
@@ -45,10 +46,10 @@ public class OI {
 	public Joystick leftJoy, rightJoy;
 	public XboxController xbox;
 	public DigitalInput limitSwitchClimbBottomStop,limitSwitchClimbUpperStop;
-	public ADXRS450_Gyro MainGyro;
+	//public ADXRS450_Gyro MainGyro;
 	public Encoder rightEncoder, leftEncoder;
 	public Button climb, reverseClimb, servo, shiftUp, shiftDown, switchDrive;
-	public Button elevatorHome, elevatorSwitch, elevatorScale, bumpUp, bumpDown;
+	public Button elevatorHome, elevatorSwitch, elevatorScale, bumpUp, bumpDown, elevatorPyramid;
 	public Button takeInCube, spinWheelsOut, takeInCubeJoy, spinWheelsOutJoy;
 	public Button openGrabber, closeGrabber, openGrabberJoy, closeGrabberJoy;
 	public Button openServo, closeServo, beginMatch;
@@ -60,7 +61,7 @@ public class OI {
 		limitSwitchClimbUpperStop = new DigitalInput(1);		
 		
 		//Initialize gyro
-		MainGyro = new ADXRS450_Gyro();
+		//MainGyro = new ADXRS450_Gyro();
 		
 		//Define controllers , values can be moved on smart dashboard
 		leftJoy = new Joystick(0);
@@ -70,20 +71,21 @@ public class OI {
 		//Left joystick buttons
 		shiftDown = new JoystickButton(leftJoy, 4);
 		shiftUp = new JoystickButton(leftJoy, 5); //top left trigger
-		openGrabberJoy = new JoystickButton (leftJoy, 3); //back button  ??Xbox??
-		closeGrabberJoy = new JoystickButton(leftJoy, 2); //start button  ??Xbox??
+		openGrabberJoy = new JoystickButton (leftJoy, 3); //back button  
+		closeGrabberJoy = new JoystickButton(leftJoy, 2); //start button  
 		
 		//Right joystick buttons
-		//openServo = new JoystickButton(rightJoy, 10); //
+		//openServo = new JoystickButton(rightJoy, 10); 
 		//closeServo = new JoystickButton(rightJoy, 11);
 		beginMatch = new JoystickButton(rightJoy, 7);
 		takeInCubeJoy = new JoystickButton(rightJoy, 3); //top right trigger
-		spinWheelsOutJoy = new JoystickButton(rightJoy, 2);//  ??Xbox??
+		spinWheelsOutJoy = new JoystickButton(rightJoy, 2);
 		switchDrive = new JoystickButton(rightJoy, 4);
 			
 		//Xbox controller buttons
 		elevatorHome = new JoystickButton(xbox, 1); //a button
-		elevatorSwitch = new JoystickButton(xbox, 2); //b button	
+		elevatorSwitch = new JoystickButton(xbox, 2); //b button
+		elevatorPyramid = new JoystickButton(xbox, 3);
 		elevatorScale = new JoystickButton (xbox, 4); //y button
 		takeInCube = new JoystickButton(xbox, 5); //top right trigger
 		spinWheelsOut = new JoystickButton(xbox, 6); //top left trigger
@@ -116,6 +118,7 @@ public class OI {
 		elevatorSwitch.whenPressed(new ElevatorToSwitchCommand());
 		elevatorScale.whenPressed(new ElevatorToScaleCommand());
 		elevatorHome.whenPressed(new ElevatorToHomeCommand());
+		elevatorPyramid.whenPressed(new ElevatorToPyramid());
 		takeInCube.whenPressed(new TakeInCubeCommandGroup());
 		spinWheelsOut.whenPressed(new EjectCubeCommandGroup());
 		openGrabber.whenPressed(new OpenArmsCommand());

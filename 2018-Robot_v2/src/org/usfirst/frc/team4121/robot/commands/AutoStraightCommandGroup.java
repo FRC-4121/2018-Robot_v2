@@ -13,6 +13,6 @@ public class AutoStraightCommandGroup extends CommandGroup {
         //      addSequential(new Command2());
         // these will run in order.
     	addSequential(new BeginningMatchCommandGroup());
-    	addSequential(new AutoDrive(110, -1, 0, 7)); 
+    	addSequential(new AutoDrive(220, -1, 0, 7)); 
     }
 }

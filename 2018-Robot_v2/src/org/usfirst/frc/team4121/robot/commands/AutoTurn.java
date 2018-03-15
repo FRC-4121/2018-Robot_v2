@@ -77,7 +77,7 @@ public class AutoTurn extends Command {
 		if (robotSide == 'N' || robotSide == RobotMap.AUTO_SWITCH_POSITION)
 		{
 
-			angleCorrection = pidControl.Run(Robot.oi.MainGyro.getAngle(), targetAngle);
+			angleCorrection = pidControl.Run(Robot.driveAngle.getDouble(0), targetAngle);
 			//angleCorrection= RobotMap.kD_Straight*(Robot.oi.MainGyro.getAngle()-targetAngle);
 			motorOutput = angleCorrection * RobotMap.AUTO_TURN_SPEED;
 			//    	if (motorOutput > 1.0)
@@ -89,7 +89,7 @@ public class AutoTurn extends Command {
 			//    		motorOutput = 0.0;
 			//    	}
 			Robot.driveTrain.autoDrive(motorOutput, -motorOutput);  
-			SmartDashboard.putString("Drive Angle:", Double.toString(Robot.oi.MainGyro.getAngle()));
+			//SmartDashboard.putString("Drive Angle:", Double.toString(Robot.oi.MainGyro.getAngle()));
 		}
 
 
@@ -114,7 +114,7 @@ public class AutoTurn extends Command {
 		else
 		{
 
-			angleError = Robot.oi.MainGyro.getAngle() - targetAngle;
+			angleError = Robot.driveAngle.getDouble(0) - targetAngle;
 			if (Math.abs(angleError) <= RobotMap.TURN_ANGLE_TOLERANCE)
 			{
 				thereYet = true;

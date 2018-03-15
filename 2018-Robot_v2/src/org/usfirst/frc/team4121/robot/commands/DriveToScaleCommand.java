@@ -51,7 +51,7 @@ public class DriveToScaleCommand extends Command {
     		
     	}
     	
-		angleCorrection = pidControl.Run(Robot.oi.MainGyro.getAngle(), targetAngle);
+		angleCorrection = pidControl.Run(Robot.driveAngle.getDouble(0), targetAngle);
 		Robot.driveTrain.autoDrive(direction*RobotMap.AUTO_DRIVE_SPEED - angleCorrection, direction*RobotMap.AUTO_DRIVE_SPEED + angleCorrection);    	    	
 
     }

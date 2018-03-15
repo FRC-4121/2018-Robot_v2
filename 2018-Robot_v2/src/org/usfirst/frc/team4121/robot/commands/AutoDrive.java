@@ -74,10 +74,11 @@ public class AutoDrive extends Command {
     protected void execute() {
     	
 //    	angleCorrection = pidControl.Run(Robot.oi.MainGyro.getAngle(), targetAngle);
-    	angleError = Robot.oi.MainGyro.getAngle()-targetAngle;
+    	angleError = Robot.driveAngle.getDouble(0)-targetAngle;
     	angleCorrection = RobotMap.kP_Straight*angleError;
     	Robot.driveTrain.autoDrive(direction*RobotMap.AUTO_DRIVE_SPEED + angleCorrection, direction*RobotMap.AUTO_DRIVE_SPEED - angleCorrection);    	    	
 		SmartDashboard.putString("Angle Correction", Double.toString(angleCorrection));
+		SmartDashboard.putString("Angle Error", Double.toString(angleError));
 
     }
 
@@ -105,15 +106,15 @@ public class AutoDrive extends Command {
     		int totalRotationsLeft = Math.abs((Robot.driveTrain.getLeftEncoderPosition() - leftEncoderStart)) / 4096;
     		Robot.distanceTraveled = (6*Math.PI*((totalRotationsRight+totalRotationsLeft)/2))/ RobotMap.DRIVE_GEAR_RATIO;
     		
-    		SmartDashboard.putString("Left encoder start: ", Integer.toString(leftEncoderStart));
-    		SmartDashboard.putString("Right encoder start: ", Integer.toString(rightEncoderStart));    		
-    		SmartDashboard.putString("Left encoder position: ", Integer.toString(Robot.driveTrain.getLeftEncoderPosition()));
-    		SmartDashboard.putString("Right encoder position: ", Integer.toString(Robot.driveTrain.getRightEncoderPosition()));
-    		SmartDashboard.putString("Total rotations left: ", Integer.toString(totalRotationsLeft));
-    		SmartDashboard.putString("Total rotations right: ", Integer.toString(totalRotationsRight));
-			SmartDashboard.putString("Distance traveled: ", Double.toString(Robot.distanceTraveled));	
-			SmartDashboard.putString("Drive Angle:", Double.toString(Robot.oi.MainGyro.getAngle()));
-			SmartDashboard.putString("Angle Error", Double.toString(angleError));
+//    		SmartDashboard.putString("Left encoder start: ", Integer.toString(leftEncoderStart));
+//    		SmartDashboard.putString("Right encoder start: ", Integer.toString(rightEncoderStart));    		
+//    		SmartDashboard.putString("Left encoder position: ", Integer.toString(Robot.driveTrain.getLeftEncoderPosition()));
+//    		SmartDashboard.putString("Right encoder position: ", Integer.toString(Robot.driveTrain.getRightEncoderPosition()));
+//    		SmartDashboard.putString("Total rotations left: ", Integer.toString(totalRotationsLeft));
+//    		SmartDashboard.putString("Total rotations right: ", Integer.toString(totalRotationsRight));
+//			SmartDashboard.putString("Distance traveled: ", Double.toString(Robot.distanceTraveled));	
+//			SmartDashboard.putString("Drive Angle:", Double.toString(Robot.oi.MainGyro.getAngle()));
+//			SmartDashboard.putString("Angle Error", Double.toString(angleError));
 
     		
 			if (targetDistance <= Robot.distanceTraveled)

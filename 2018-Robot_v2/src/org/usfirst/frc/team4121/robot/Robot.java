@@ -57,7 +57,7 @@ public class Robot extends IterativeRobot {
 	public static NetworkTableEntry xVelocity;
 	public static NetworkTableEntry yDisplacement;
 	public static NetworkTableEntry xDisplacement;
-	public static NetworkTableEntry gyroInit;
+	public static NetworkTableEntry zeroGyro;
 	
 	//Subsystems
 	public static DriveTrainSubsystem driveTrain;
@@ -99,18 +99,18 @@ public class Robot extends IterativeRobot {
 		
 		//NetworkTable Entries
 		robotStop = visionTable.getEntry("RobotStop");
-		cubeAngle = visionTable.getEntry("cubeAngle");
-		cubeDistance = visionTable.getEntry("cubeDistance");
-		cubeHeight = visionTable.getEntry("cubeHeight");
-		driveAngle = navxTable.getEntry("driveAngle");
+		cubeAngle = visionTable.getEntry("CubeAngle");
+		cubeDistance = visionTable.getEntry("CubeDistance");
+		//cubeHeight = visionTable.getEntry("cubeHeight");
+		driveAngle = navxTable.getEntry("DriveAngle");
 		yVelocity = navxTable.getEntry("YVelocity");
 		xVelocity = navxTable.getEntry("XVelocity");
 		yDisplacement = navxTable.getEntry("YDisplacement");
 		xDisplacement = navxTable.getEntry("XDisplacement");
-		gyroInit = navxTable.getEntry("gyroInit");
+		zeroGyro = navxTable.getEntry("ZeroGyro");
 
-		//robotStop.setDouble(0.0);
-		//gyroInit.setDouble(1.0);		
+		robotStop.setDouble(0.0);
+		zeroGyro.setDouble(1.0);		
 
 		//Initialize subsystems		
 		driveTrain = new DriveTrainSubsystem();
@@ -121,11 +121,11 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		
 		//Camera Server setup
-		server = CameraServer.getInstance();
-		cam = new UsbCamera("Main Camera", 0);
-		server.addCamera(cam);
-		cam.setResolution(320, 240);
-		server.startAutomaticCapture(cam);
+//		server = CameraServer.getInstance();
+//		cam = new UsbCamera("Main Camera", 0);
+//		server.addCamera(cam);
+//		cam.setResolution(160, 120);
+//		server.startAutomaticCapture(cam);
 		
 		//Initialize dashboard choosers
 		//!!Update this to reflect any new auto code!!
@@ -197,8 +197,8 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		
 		//Calibrate the main gyro
-		Robot.oi.MainGyro.calibrate();
-		Robot.oi.MainGyro.reset();
+		//Robot.oi.MainGyro.calibrate();
+		//Robot.oi.MainGyro.reset();
 		
 		//grab gameData
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
@@ -260,7 +260,7 @@ public class Robot extends IterativeRobot {
 		//Put key values on the SmartDashboard
 		SmartDashboard.putString("Gear Postion: ", shifter.gearPosition());
 		SmartDashboard.putString("Drive Direction:", Integer.toString(RobotMap.DIRECTION_MULTIPLIER));		
-		SmartDashboard.putNumber("Gyro Reading:", oi.MainGyro.getAngle());
+		//SmartDashboard.putNumber("Gyro Reading:", oi.MainGyro.getAngle());
 		//SmartDashboard.putNumber("Master Current", Robot.elevator.m_motor.getOutputCurrent());
 		//SmartDashboard.putNumber("Slave Current", Robot.elevator.m_motor2_follower.getOutputCurrent());
 		//SmartDashboard.putNumber("Master Output", Robot.elevator.m_motor.getMotorOutputPercent());
@@ -269,7 +269,7 @@ public class Robot extends IterativeRobot {
 		//SmartDashboard.putString("Right Drive Distance (in inches): ", Double.toString(Robot.oi.rightEncoder.getDistance()));
 		//SmartDashboard.putString("Left Drive Distance (in inches): ", Double.toString(Robot.oi.leftEncoder.getDistance()));		
 		//SmartDashboard.putString("Limit Switch: ", Boolean.toString(Robot.oi.limitSwitch.get()));
-		//SmartDashboard.putString("Drive Angle: ", Double.toString(Robot.oi.MainGyro.getAngle()));
+		//SmartDashboard.putString("Drive Angle: ", Double.toString(Robot.oi.MainGyro.getAngle())); //gyro on the pi
 	
 	}
 	
