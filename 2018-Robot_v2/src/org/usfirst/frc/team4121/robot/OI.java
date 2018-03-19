@@ -1,29 +1,13 @@
 package org.usfirst.frc.team4121.robot;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import org.usfirst.frc.team4121.robot.commands.AbortAutoDriveToCube;
+import org.usfirst.frc.team4121.robot.commands.AngleMotorCommand;
+import org.usfirst.frc.team4121.robot.commands.AngleMotorReverseCommand;
+import org.usfirst.frc.team4121.robot.commands.AutoAngleMotorCommand;
+import org.usfirst.frc.team4121.robot.commands.AutoPickUpCubeCommandGroup;
 import org.usfirst.frc.team4121.robot.commands.BeginningMatchCommandGroup;
-import org.usfirst.frc.team4121.robot.commands.BumpElevatorDownCommand;
-import org.usfirst.frc.team4121.robot.commands.BumpElevatorUpCommand;
 import org.usfirst.frc.team4121.robot.commands.ClimbCommand;
 import org.usfirst.frc.team4121.robot.commands.ClimbReverseCommand;
-import org.usfirst.frc.team4121.robot.commands.CloseServo;
-import org.usfirst.frc.team4121.robot.commands.PraticeEncoders;
-import org.usfirst.frc.team4121.robot.commands.ShiftDownCommand;
-import org.usfirst.frc.team4121.robot.commands.ShiftUpCommand;
-import org.usfirst.frc.team4121.robot.commands.SpinWheelsInCommand;
-import org.usfirst.frc.team4121.robot.commands.SpinWheelsOutCommand;
-import org.usfirst.frc.team4121.robot.commands.StopClimbCommand;
-import org.usfirst.frc.team4121.robot.commands.SwitchDriveCommand;
-import org.usfirst.frc.team4121.robot.commands.TakeInCubeCommandGroup;
 import org.usfirst.frc.team4121.robot.commands.ClosedArmsCommand;
 import org.usfirst.frc.team4121.robot.commands.EjectCubeCommandGroup;
 import org.usfirst.frc.team4121.robot.commands.ElevatorToHomeCommand;
@@ -31,8 +15,18 @@ import org.usfirst.frc.team4121.robot.commands.ElevatorToPyramid;
 import org.usfirst.frc.team4121.robot.commands.ElevatorToScaleCommand;
 import org.usfirst.frc.team4121.robot.commands.ElevatorToSwitchCommand;
 import org.usfirst.frc.team4121.robot.commands.OpenArmsCommand;
-import org.usfirst.frc.team4121.robot.commands.OpenServoCommand;
-import org.usfirst.frc.team4121.robot.subsystems.DriveTrainSubsystem;
+import org.usfirst.frc.team4121.robot.commands.ShiftDownCommand;
+import org.usfirst.frc.team4121.robot.commands.ShiftUpCommand;
+import org.usfirst.frc.team4121.robot.commands.StopClimbCommand;
+import org.usfirst.frc.team4121.robot.commands.SwitchDriveCommand;
+import org.usfirst.frc.team4121.robot.commands.TakeInCubeCommandGroup;
+
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 
 /**
@@ -49,8 +43,8 @@ public class OI {
 	//public ADXRS450_Gyro MainGyro;
 	public Encoder rightEncoder, leftEncoder;
 	public Button climb, reverseClimb, servo, shiftUp, shiftDown, switchDrive;
-	public Button elevatorHome, elevatorSwitch, elevatorScale, bumpUp, bumpDown, elevatorPyramid;
-	public Button takeInCube, spinWheelsOut, takeInCubeJoy, spinWheelsOutJoy;
+	public Button elevatorHome, elevatorSwitch, elevatorScale, bumpUp, bumpDown, elevatorPyramid,autoDriveToCube, abortAutoDriveToCube, endAngleMotor;
+	public Button takeInCube, spinWheelsOut, takeInCubeJoy, spinWheelsOutJoy, autoTesterEndAngleMotor;
 	public Button openGrabber, closeGrabber, openGrabberJoy, closeGrabberJoy;
 	public Button openServo, closeServo, beginMatch;
 	
@@ -72,7 +66,8 @@ public class OI {
 		shiftDown = new JoystickButton(leftJoy, 4);
 		shiftUp = new JoystickButton(leftJoy, 5); //top left trigger
 		openGrabberJoy = new JoystickButton (leftJoy, 3); //back button  
-		closeGrabberJoy = new JoystickButton(leftJoy, 2); //start button  
+		closeGrabberJoy = new JoystickButton(leftJoy, 2); //start button 
+		abortAutoDriveToCube = new JoystickButton(leftJoy, 1); 
 		
 		//Right joystick buttons
 		//openServo = new JoystickButton(rightJoy, 10); 
@@ -81,6 +76,9 @@ public class OI {
 		takeInCubeJoy = new JoystickButton(rightJoy, 3); //top right trigger
 		spinWheelsOutJoy = new JoystickButton(rightJoy, 2);
 		switchDrive = new JoystickButton(rightJoy, 4);
+		autoDriveToCube = new JoystickButton(rightJoy, 1);
+		endAngleMotor = new JoystickButton(rightJoy, 5);
+		autoTesterEndAngleMotor = new JoystickButton(rightJoy, 7);
 			
 		//Xbox controller buttons
 		elevatorHome = new JoystickButton(xbox, 1); //a button
@@ -101,12 +99,17 @@ public class OI {
 		shiftDown.whenActive(new ShiftDownCommand());
 		openGrabberJoy.whenPressed(new OpenArmsCommand());
 		closeGrabberJoy.whenPressed(new ClosedArmsCommand());
+		abortAutoDriveToCube.whenPressed(new AbortAutoDriveToCube());
 		
 		//define right joystick button commands
 		beginMatch.whenPressed(new BeginningMatchCommandGroup());
 		takeInCubeJoy.whenPressed(new TakeInCubeCommandGroup());
 		spinWheelsOutJoy.whenPressed(new EjectCubeCommandGroup());
 		switchDrive.whenPressed(new SwitchDriveCommand());
+		autoDriveToCube.whenPressed(new AutoPickUpCubeCommandGroup());
+		endAngleMotor.whileHeld(new AngleMotorCommand());
+		autoTesterEndAngleMotor.whenPressed(new AutoAngleMotorCommand());
+		
 		//openServo.whenPressed(new OpenServoCommand());
 		//closeServo.whenPressed(new CloseServo());
 		
@@ -123,6 +126,7 @@ public class OI {
 		spinWheelsOut.whenPressed(new EjectCubeCommandGroup());
 		openGrabber.whenPressed(new OpenArmsCommand());
 		closeGrabber.whenPressed(new ClosedArmsCommand());
+		
 		//bumpUp.whenPressed(new BumpElevatorUpCommand());
 		//bumpDown.whenPressed(new BumpElevatorDownCommand());
 		

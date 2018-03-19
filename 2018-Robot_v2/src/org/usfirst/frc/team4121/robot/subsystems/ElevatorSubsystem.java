@@ -67,7 +67,7 @@ public class ElevatorSubsystem extends Subsystem {
 		
 		/* first choose the sensor */
 		m_motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, RobotMap.kTimeoutMs);
-		m_motor.setSensorPhase(true); //may have to change back to true
+		m_motor.setSensorPhase(false); //change back to true  for comp. bot
 
 		
 		/* Set relevant frame periods to be at least as fast as periodic rate*/

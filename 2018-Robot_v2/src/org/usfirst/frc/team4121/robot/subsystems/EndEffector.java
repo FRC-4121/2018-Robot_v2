@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -17,8 +18,13 @@ public class EndEffector extends Subsystem {
 
 	public WPI_TalonSRX endmotor1 = new WPI_TalonSRX(RobotMap.ENDMOTOR1);
 	public WPI_TalonSRX endmotor2 = new WPI_TalonSRX(RobotMap.ENDMOTOR2);
+	public WPI_TalonSRX anglemotor = new WPI_TalonSRX(RobotMap.ANGLEMOTOR);
 	public Servo leftServo = new Servo(8);
 	public Servo rightServo = new Servo(9);
+	
+	private Timer wheelTimer = new Timer();
+	private double startTime;
+	
 	
 	
 	//solenoid setup
@@ -39,6 +45,29 @@ public class EndEffector extends Subsystem {
     	endmotor2.set(endspeed);//for competition this should be negative
     	
     }
+    
+    public void angleMotor(double turnspeed) {
+    	
+    	anglemotor.set(turnspeed);
+    	
+    }
+    
+    //for auto take in cube command
+    public void autoTakeInCube()
+    {
+    	wheelTimer.start();
+    	startTime= wheelTimer.get();
+    	
+    	closeArms();
+    	while(wheelTimer.get()-startTime < 1.5)
+    	{
+    		endeffector(.75);
+    	}
+    	endeffector(0);
+    	
+    	
+    }
+    
     //stops wheels with limit switch 
     public void stopWithLimitSwitch(){
     	endmotor1.set(.5);

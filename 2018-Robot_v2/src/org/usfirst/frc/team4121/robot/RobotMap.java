@@ -20,6 +20,7 @@ public class RobotMap {
 	public static final int ENDMOTOR2 = 1;
 	public static final int ELEVATOR_MOTOR_MASTER = 6;
 	public static final int ELEVATOR_MOTOR_SLAVE = 7;
+	public static final int ANGLEMOTOR = 9;
 
 	//Motor Controller Constants - Competition Robots
 //	public static final int LEFT_MOTOR_MASTER = 7;
@@ -31,9 +32,11 @@ public class RobotMap {
 //	public static final int ENDMOTOR2 = 3; 
 //	public static final int ELEVATOR_MOTOR_MASTER = 2;
 //	public static final int ELEVATOR_MOTOR_SLAVE = 0;
+	//public static final int ANGLEMOTOR = 9; //need to change value
 
 	//Motor Speeds
-	public static final double END_EFFECTOR_SPEED = .5; 
+	public static final double END_EFFECTOR_SPEED = .5;
+	public static final double ANGLE_END_EFFECTOR_SPEED = .3;
 	public static final double DRIVE_SPEED = 0.8;
 	public static double AUTO_DRIVE_SPEED = 0.8;
 	public static double AUTO_TURN_SPEED = 0.6;
@@ -47,9 +50,11 @@ public class RobotMap {
 	public static double TURN_ANGLE_TOLERANCE = .001;
 	public static char AUTO_SWITCH_POSITION;
 	public static char AUTO_SCALE_POSITION;
+	public static boolean ABORT_CUBE= false;
 
 	//PID values
 	public static double kP_Straight = 0.02;
+	public static double kP_Cube = .2;
 	public static double kP_Turn = 0.05;
 	public static double kI_Straight = 0.0;
 	public static double kI_Turn = 0.0;

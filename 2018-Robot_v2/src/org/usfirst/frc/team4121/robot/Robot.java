@@ -28,8 +28,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
-  * The VM is configured to automatically run this class, and to call the
- * We made a thing
+ * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the manifest file in the resource
@@ -52,12 +51,15 @@ public class Robot extends IterativeRobot {
 	public static NetworkTableEntry cubeHeight;
 	public static NetworkTableEntry cubeAngle;
 	public static NetworkTableEntry cubeDistance;
+	public static NetworkTableEntry cubeOffset;
+	public static NetworkTableEntry cubePercentWidth;
 	public static NetworkTableEntry driveAngle;
 	public static NetworkTableEntry yVelocity;
 	public static NetworkTableEntry xVelocity;
 	public static NetworkTableEntry yDisplacement;
 	public static NetworkTableEntry xDisplacement;
 	public static NetworkTableEntry zeroGyro;
+	public static NetworkTableEntry writeVideo;
 	
 	//Subsystems
 	public static DriveTrainSubsystem driveTrain;
@@ -101,6 +103,9 @@ public class Robot extends IterativeRobot {
 		robotStop = visionTable.getEntry("RobotStop");
 		cubeAngle = visionTable.getEntry("CubeAngle");
 		cubeDistance = visionTable.getEntry("CubeDistance");
+		cubeOffset = visionTable.getEntry("CubeOffset");
+		cubePercentWidth = visionTable.getEntry("CubePercentWidth");
+		writeVideo = visionTable.getEntry("WriteVideo");
 		//cubeHeight = visionTable.getEntry("cubeHeight");
 		driveAngle = navxTable.getEntry("DriveAngle");
 		yVelocity = navxTable.getEntry("YVelocity");
@@ -108,10 +113,11 @@ public class Robot extends IterativeRobot {
 		yDisplacement = navxTable.getEntry("YDisplacement");
 		xDisplacement = navxTable.getEntry("XDisplacement");
 		zeroGyro = navxTable.getEntry("ZeroGyro");
+		
 
 		robotStop.setDouble(0.0);
 		zeroGyro.setDouble(1.0);		
-
+		
 		//Initialize subsystems		
 		driveTrain = new DriveTrainSubsystem();
 		shifter = new ShifterSubsystem();
@@ -211,6 +217,9 @@ public class Robot extends IterativeRobot {
 		//Reset encoders
 		RobotMap.LEFT_STARTING_POSITION = Robot.driveTrain.getLeftEncoderPosition();
 		RobotMap.RIGHT_STARTING_POSITION = Robot.driveTrain.getRightEncoderPosition();
+		
+		//start video
+		writeVideo.setDouble(1.0);
 
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null) {
