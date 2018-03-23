@@ -9,27 +9,27 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class AutoAngleMotorCommand extends Command {
+public class AutoAngleMotorDownCommand extends Command {
 	
 	double time;
 	double startTime;
 	Timer timer = new Timer();
 	
-	public AutoAngleMotorCommand() {
+	public AutoAngleMotorDownCommand() {
 		requires(Robot.end);
 
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		startTime = timer.get();
+		startTime = timer.get();//I want to use a limit switch here instead of timer.
     	time = 2;//test value
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 	
-		Robot.end.angleMotor(RobotMap.ANGLE_END_EFFECTOR_SPEED);
+		Robot.end.angleMotor(-RobotMap.ANGLE_END_EFFECTOR_SPEED);
 		
 	}
 

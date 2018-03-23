@@ -210,6 +210,7 @@ public class Robot extends IterativeRobot {
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		RobotMap.AUTO_SWITCH_POSITION = gameData.charAt(0);
 		RobotMap.AUTO_SCALE_POSITION = gameData.charAt(1);
+		RobotMap.AUTO_SWITCH_AND_SCALE = gameData.substring(2);
 
 		//Get selected autonomous command
 		autonomousCommand = chooser.getSelected();

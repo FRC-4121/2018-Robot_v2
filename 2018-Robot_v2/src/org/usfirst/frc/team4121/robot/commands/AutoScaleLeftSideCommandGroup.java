@@ -14,7 +14,11 @@ public class AutoScaleLeftSideCommandGroup extends CommandGroup {
     	
     	addSequential(new toScaleAutoCommand('L'));
     	
+    	addSequential(new AutoAngleMotorCommand());
+    	
     	addSequential(new EjectCubeCommand('L'));
+    	
+    	addSequential(new AutoAngleMotorDownCommand());
     	
     	//addParallel(new AutoDrive(10, -1, 0, 3)); //make sure the grabber won't hit the scale
     	

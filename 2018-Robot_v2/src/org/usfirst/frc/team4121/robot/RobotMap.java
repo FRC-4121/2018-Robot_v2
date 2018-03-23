@@ -50,6 +50,7 @@ public class RobotMap {
 	public static double TURN_ANGLE_TOLERANCE = .001;
 	public static char AUTO_SWITCH_POSITION;
 	public static char AUTO_SCALE_POSITION;
+	public static String AUTO_SWITCH_AND_SCALE;
 	public static boolean ABORT_CUBE= false;
 
 	//PID values

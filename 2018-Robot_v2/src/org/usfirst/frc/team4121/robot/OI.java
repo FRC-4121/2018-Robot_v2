@@ -2,8 +2,8 @@ package org.usfirst.frc.team4121.robot;
 
 import org.usfirst.frc.team4121.robot.commands.AbortAutoDriveToCube;
 import org.usfirst.frc.team4121.robot.commands.AngleMotorCommand;
-import org.usfirst.frc.team4121.robot.commands.AngleMotorReverseCommand;
 import org.usfirst.frc.team4121.robot.commands.AutoAngleMotorCommand;
+import org.usfirst.frc.team4121.robot.commands.AutoAngleMotorDownCommand;
 import org.usfirst.frc.team4121.robot.commands.AutoPickUpCubeCommandGroup;
 import org.usfirst.frc.team4121.robot.commands.BeginningMatchCommandGroup;
 import org.usfirst.frc.team4121.robot.commands.ClimbCommand;
@@ -109,7 +109,7 @@ public class OI {
 		autoDriveToCube.whenPressed(new AutoPickUpCubeCommandGroup());
 		endAngleMotor.whileHeld(new AngleMotorCommand());
 		autoTesterEndAngleMotor.whenPressed(new AutoAngleMotorCommand());
-		
+		autoTesterEndAngleMotor.whenReleased(new AutoAngleMotorDownCommand());
 		//openServo.whenPressed(new OpenServoCommand());
 		//closeServo.whenPressed(new CloseServo());
 		
