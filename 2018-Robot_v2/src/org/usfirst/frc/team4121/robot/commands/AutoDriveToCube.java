@@ -17,6 +17,7 @@ public class AutoDriveToCube extends Command {
 	double startTime;
 	double cubeCorrection = 0;
 	double speedMultiplier;
+	double cubeHeight;
 
 	public Timer timer = new Timer();
 
@@ -33,6 +34,17 @@ public class AutoDriveToCube extends Command {
 	protected void initialize() {
 		timer.start();
 		startTime= timer.get();
+		
+//		cubeHeight = Robot.cubeHeight.getDouble(0);
+//		
+//		if(cubeHeight == 10.0) //set the height of the elevator based on the cubeHeight from the camera
+//			
+//			Robot.elevator.goToHome();
+//			
+//		else 
+//			
+//			Robot.elevator.runToPyramid();
+		
 	}
 
 	// Called repeatedly when this Command is scheduled to run

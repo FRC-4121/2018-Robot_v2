@@ -16,7 +16,7 @@ public class AutoScaleRightSideCommandGroup extends CommandGroup {
     	
     	addSequential(new EjectCubeCommand('R'));
     	
-    	//addParallel(new AutoDrive(10, -1, 0, 3)); //make sure that the grabber won't hit the scale
+    	//addSequential(new AutoDrive(10, -1, 0, 3)); //make sure that the grabber won't hit the scale
     	
     	addSequential(new ElevatorToHomeCommand());
 

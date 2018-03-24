@@ -1,40 +1,33 @@
 package org.usfirst.frc.team4121.robot.commands;
 
 import org.usfirst.frc.team4121.robot.Robot;
-import org.usfirst.frc.team4121.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class AngleMotorReverseCommand extends Command {
-	
+public class StopAngleMotorCommand extends Command {
 
-    public AngleMotorReverseCommand() {
-        
-    	requires(Robot.end);
-    	
+    public StopAngleMotorCommand() {
+        // Use requires() here to declare subsystem dependencies
+        requires(Robot.end);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
-    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	Robot.end.angleMotor(RobotMap.DOWN_ANGLE_END_EFFECTOR_SPEED);
+    	Robot.end.angleMotor(0.0);
     	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        
-    	return true;
-    	
+        return false;
     }
 
     // Called once after isFinished returns true

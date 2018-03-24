@@ -20,7 +20,7 @@ public class AutoScaleLeftSideCommandGroup extends CommandGroup {
     	
     	addSequential(new AutoAngleMotorDownCommand());
     	
-    	//addParallel(new AutoDrive(10, -1, 0, 3)); //make sure the grabber won't hit the scale
+    	//addSequential(new AutoDrive(10, -1, 0, 3)); //make sure the grabber won't hit the scale
     	
     	addSequential(new ElevatorToHomeCommand());
     	
