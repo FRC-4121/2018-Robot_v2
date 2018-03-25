@@ -22,20 +22,21 @@ public class AutoAngleMotorDownCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		timer.start();
 		startTime = timer.get();//I want to use a limit switch here instead of timer.
-    	time = 2;//test value
+    	time = 1;//test value
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 	
-		Robot.end.angleMotor(-RobotMap.ANGLE_END_EFFECTOR_SPEED);
+		Robot.end.angleMotor(RobotMap.ANGLE_END_EFFECTOR_SPEED);
 		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		if (timer.get() - startTime <= time) 
+		if (timer.get() - startTime >= time) 
 
 			return true;
 
@@ -45,6 +46,8 @@ public class AutoAngleMotorDownCommand extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
+		
+		Robot.end.angleMotor(0);
 	}
 
 	// Called when another command which requires one or more of the same

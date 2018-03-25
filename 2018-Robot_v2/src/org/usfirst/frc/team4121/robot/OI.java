@@ -3,6 +3,7 @@ package org.usfirst.frc.team4121.robot;
 import org.usfirst.frc.team4121.robot.commands.AbortAutoDriveToCube;
 import org.usfirst.frc.team4121.robot.commands.AngleMotorCommand;
 import org.usfirst.frc.team4121.robot.commands.AngleMotorReverseCommand;
+import org.usfirst.frc.team4121.robot.commands.AutoAngleMotorDownCommand;
 import org.usfirst.frc.team4121.robot.commands.AutoPickUpCubeCommandGroup;
 import org.usfirst.frc.team4121.robot.commands.BeginningMatchCommandGroup;
 import org.usfirst.frc.team4121.robot.commands.ClimbCommand;
@@ -45,7 +46,7 @@ public class OI {
 	public Button climb, reverseClimb, servo, shiftUp, shiftDown, switchDrive;
 	public Button elevatorHome, elevatorSwitch, elevatorScale, bumpUp, bumpDown, elevatorPyramid,autoDriveToCube, abortAutoDriveToCube, endAngleMotorUp, endAngleMotorDown;
 	public Button takeInCube, spinWheelsOut, takeInCubeJoy, spinWheelsOutJoy, autoTesterEndAngleMotor;
-	public Button openGrabber, closeGrabber, openGrabberJoy, closeGrabberJoy;
+	public Button openGrabber, closeGrabber, openGrabberJoy, closeGrabberJoy, testBeginMatch;
 	public Button openServo, closeServo, beginMatch;
 	
 	public OI() {
@@ -68,6 +69,8 @@ public class OI {
 		openGrabberJoy = new JoystickButton (leftJoy, 3); //center trigger  
 		closeGrabberJoy = new JoystickButton(leftJoy, 2); //lower center trigger 
 		abortAutoDriveToCube = new JoystickButton(leftJoy, 1); //trigger button 
+		testBeginMatch = new JoystickButton(leftJoy, 10); 
+		
 		
 		//Right joystick buttons
 		//openServo = new JoystickButton(rightJoy, 10); 
@@ -86,8 +89,8 @@ public class OI {
 		elevatorSwitch = new JoystickButton(xbox, 2); //b button
 		elevatorPyramid = new JoystickButton(xbox, 3); //x button
 		elevatorScale = new JoystickButton (xbox, 4); //y button
-		takeInCube = new JoystickButton(xbox, 5); //top right trigger
-		spinWheelsOut = new JoystickButton(xbox, 6); //top left trigger
+		takeInCube = new JoystickButton(xbox, 5); //top left trigger
+		spinWheelsOut = new JoystickButton(xbox, 6); //top right trigger
 		openGrabber = new JoystickButton (xbox, 7); //back button
 		closeGrabber = new JoystickButton(xbox, 8); //start button
 		//bumpUp = new JoystickButton(xbox, 9); //left mini joystick
@@ -101,6 +104,7 @@ public class OI {
 		openGrabberJoy.whenPressed(new OpenArmsCommand());
 		closeGrabberJoy.whenPressed(new ClosedArmsCommand());
 		abortAutoDriveToCube.whenPressed(new AbortAutoDriveToCube());
+		testBeginMatch.whenPressed(new AutoAngleMotorDownCommand());
 		
 		//define right joystick button commands
 		//beginMatch.whenPressed(new BeginningMatchCommandGroup());

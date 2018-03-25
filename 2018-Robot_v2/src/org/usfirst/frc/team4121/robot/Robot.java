@@ -205,6 +205,7 @@ public class Robot extends IterativeRobot {
 		//Calibrate the main gyro
 		//Robot.oi.MainGyro.calibrate();
 		//Robot.oi.MainGyro.reset();
+		zeroGyro.setDouble(1.0);
 		
 		//grab gameData
 		gameData = DriverStation.getInstance().getGameSpecificMessage();

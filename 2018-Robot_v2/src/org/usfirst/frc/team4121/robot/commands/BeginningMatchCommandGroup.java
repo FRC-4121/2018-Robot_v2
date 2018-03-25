@@ -12,7 +12,7 @@ public class BeginningMatchCommandGroup extends CommandGroup {
 
     	addSequential(new ClosedArmsCommand());
     	
-        addSequential(new OpenServoCommand());
+        addSequential(new AutoAngleMotorDownCommand());
         
     }
 }

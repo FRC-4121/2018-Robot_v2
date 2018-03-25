@@ -164,6 +164,8 @@ public class GrandTheftAutoCommand extends Command {
 							scaleProcedure = true;
 							liftCubeToScale = true;
 							Robot.distanceTraveled = 0; //reset the distance traveled
+							angleCorrection = 0;
+							angleError = 0;
 
 						}
 
@@ -198,11 +200,12 @@ public class GrandTheftAutoCommand extends Command {
 
 						Robot.end.angleMotor(RobotMap.ANGLE_END_EFFECTOR_SPEED); //angle the motor up
 
-						if (timer.get() - startTime <= stopTime) { //stop when we hit the time defined above
+						if (stopTime <= timer.get()-startTime) { //stop when we hit the time defined above
 
 							angleGrabberUp = false;
 							ejectCube = true;
-
+							Robot.end.angleMotor(0);
+							
 							startTime = timer.get(); //reset the timer for the next step
 
 						}
@@ -216,10 +219,12 @@ public class GrandTheftAutoCommand extends Command {
 
 						Robot.end.endeffector(-1.0);
 
-						if(timer.get() - startTime <= stopTime) {
+						if(stopTime <= timer.get()-startTime) {
 
 							ejectCube = false;
 							backUp = true;
+							
+							Robot.end.endeffector(0);
 
 							startTime = timer.get(); //same drill as usual
 
@@ -261,6 +266,8 @@ public class GrandTheftAutoCommand extends Command {
 								backUp = false;
 								angleGrabberDown = true;
 								Robot.distanceTraveled = 0;
+								angleCorrection = 0;
+								angleError = 0;
 								
 							}
 
@@ -275,10 +282,15 @@ public class GrandTheftAutoCommand extends Command {
 
 						Robot.end.angleMotor(-RobotMap.ANGLE_END_EFFECTOR_SPEED); //angle the motor down
 
-						if (timer.get() - startTime <= stopTime) { //stop when we hit the time defined above
+						if (stopTime <= timer.get()-startTime) { //stop when we hit the time defined above
 
 							angleGrabberUp = false;
 							ejectCube = true;
+							
+							Robot.end.angleMotor(0);
+							
+							
+							
 
 						}
 
@@ -306,7 +318,7 @@ public class GrandTheftAutoCommand extends Command {
 				//Turn around
 				if(turnAround) {
 
-					targetAngle = 180;
+					targetAngle = 135;
 
 					angleCorrection = pidControlTurn.Run(Robot.driveAngle.getDouble(0), targetAngle);
 
@@ -328,6 +340,8 @@ public class GrandTheftAutoCommand extends Command {
 
 							turnAround = false;
 							grabSecondCube = true;
+							angleCorrection = 0;
+							angleError = 0;
 
 							startTime = timer.get();
 
@@ -407,7 +421,7 @@ public class GrandTheftAutoCommand extends Command {
 				//Turn around again
 				if(secondTurnAround) {
 
-					targetAngle = 0;
+					targetAngle = -25;
 
 					angleCorrection = pidControlTurn.Run(Robot.driveAngle.getDouble(0), targetAngle);
 
@@ -429,6 +443,8 @@ public class GrandTheftAutoCommand extends Command {
 
 							secondTurnAround = false;
 							toScaleFromCube = true;
+							angleCorrection = 0;
+							angleError = 0;
 
 						}
 
@@ -440,7 +456,7 @@ public class GrandTheftAutoCommand extends Command {
 				if(toScaleFromCube) {
 
 					//set variables for driving
-					targetDistance = 65; //probably around this distance
+					targetDistance = 40; //conservative distance
 					direction = 1;
 					targetAngle = 0;
 
@@ -467,6 +483,8 @@ public class GrandTheftAutoCommand extends Command {
 							toScaleFromCube = false;
 							scaleProcedure = true; //we re-run the scale procedures above
 							Robot.distanceTraveled = 0;
+							angleCorrection = 0;
+							angleError = 0;
 							
 						}
 
@@ -507,6 +525,8 @@ public class GrandTheftAutoCommand extends Command {
 							drivingToPathway = false;
 							turnIntoPath = true;
 							Robot.distanceTraveled = 0;
+							angleCorrection = 0;
+							angleError = 0;
 							
 						}
 
@@ -538,6 +558,9 @@ public class GrandTheftAutoCommand extends Command {
 
 							turnIntoPath = false;
 							driveToOtherSide = true;
+							
+							angleCorrection = 0;
+							angleError = 0;
 							
 						}
 
@@ -575,7 +598,10 @@ public class GrandTheftAutoCommand extends Command {
 							//Robot has reached its destination.  Stop this command and switch to the next part of the command
 							drivingToPathway = false;
 							turnIntoPath = true;
+							
 							Robot.distanceTraveled = 0;
+							angleCorrection = 0;
+							angleError = 0;
 							
 						}
 
@@ -623,6 +649,9 @@ public class GrandTheftAutoCommand extends Command {
 							turnToSwitch = false;
 							ejectCube = true;
 							
+							angleCorrection = 0;
+							angleError = 0;
+							
 						}
 
 					}
@@ -635,7 +664,7 @@ public class GrandTheftAutoCommand extends Command {
 
 					Robot.end.endeffector(-1.0);
 
-					if(timer.get() - startTime <= stopTime) {
+					if(stopTime <= timer.get()-startTime) {
 
 						ejectCube = false;
 						backUp = true;
@@ -691,6 +720,8 @@ public class GrandTheftAutoCommand extends Command {
 							drivingToPathway = false;
 							turnIntoPath = true;
 							Robot.distanceTraveled = 0;
+							angleCorrection = 0;
+							angleError = 0;
 							
 						}
 
@@ -722,7 +753,8 @@ public class GrandTheftAutoCommand extends Command {
 
 							turnIntoPath = false;
 							driveToCloseSwitch = true;
-							
+							angleCorrection = 0;
+							angleError = 0;
 						}
 
 					}
@@ -760,6 +792,8 @@ public class GrandTheftAutoCommand extends Command {
 							drivingToPathway = false;
 							turnIntoPath = true;
 							Robot.distanceTraveled = 0;
+							angleCorrection = 0;
+							angleError = 0;
 							
 						}
 
@@ -806,6 +840,8 @@ public class GrandTheftAutoCommand extends Command {
 
 							turnToSwitch = false;
 							ejectCube = true;
+							angleCorrection = 0;
+							angleError = 0;
 							
 						}
 
@@ -819,10 +855,11 @@ public class GrandTheftAutoCommand extends Command {
 
 					Robot.end.endeffector(-1.0);
 
-					if(timer.get() - startTime <= stopTime) {
+					if(stopTime <= timer.get()-startTime) {
 
 						ejectCube = false;
 						backUp = true;
+						Robot.end.endeffector(0);
 
 						startTime = timer.get(); //same drill as usual
 
@@ -879,7 +916,9 @@ public class GrandTheftAutoCommand extends Command {
 							scaleProcedure = true;
 							liftCubeToScale = true;
 							Robot.distanceTraveled = 0; //reset the distance traveled
-
+							angleCorrection = 0;
+							angleError = 0;
+							
 						}
 
 					}
@@ -913,10 +952,12 @@ public class GrandTheftAutoCommand extends Command {
 
 						Robot.end.angleMotor(RobotMap.ANGLE_END_EFFECTOR_SPEED); //angle the motor up
 
-						if (timer.get() - startTime <= stopTime) { //stop when we hit the time defined above
+						if (stopTime <= timer.get()-startTime) { //stop when we hit the time defined above
 
 							angleGrabberUp = false;
 							ejectCube = true;
+							
+							Robot.end.angleMotor(0);
 
 							startTime = timer.get(); //reset the timer for the next step
 
@@ -931,10 +972,12 @@ public class GrandTheftAutoCommand extends Command {
 
 						Robot.end.endeffector(-1.0);
 
-						if(timer.get() - startTime <= stopTime) {
+						if(stopTime <= timer.get()-startTime) {
 
 							ejectCube = false;
 							backUp = true;
+							
+							Robot.end.endeffector(0);
 
 							startTime = timer.get(); //same drill as usual
 
@@ -976,7 +1019,8 @@ public class GrandTheftAutoCommand extends Command {
 								backUp = false;
 								angleGrabberDown = true;
 								Robot.distanceTraveled = 0;
-								
+								angleCorrection = 0;
+								angleError = 0;
 							}
 
 						}
@@ -986,12 +1030,13 @@ public class GrandTheftAutoCommand extends Command {
 					//reverse angle motor
 					if(angleGrabberDown) { //should have a limit switch for this!!
 
-						stopTime = 2; //time to angle motor up
+						stopTime = 0; //time to angle motor up
 
 						Robot.end.angleMotor(-RobotMap.ANGLE_END_EFFECTOR_SPEED); //angle the motor down
 
-						if (timer.get() - startTime <= stopTime) { //stop when we hit the time defined above
-
+						if (stopTime <= timer.get()-startTime) { //stop when we hit the time defined above
+							
+							Robot.end.angleMotor(0);
 							angleGrabberUp = false;
 							ejectCube = true;
 
@@ -1043,7 +1088,8 @@ public class GrandTheftAutoCommand extends Command {
 
 							turnAround = false;
 							grabSecondCube = true;
-
+							angleCorrection = 0;
+							angleError = 0;
 							startTime = timer.get();
 
 						}
@@ -1073,7 +1119,7 @@ public class GrandTheftAutoCommand extends Command {
 						cubeCorrection = 0;
 					}
 
-					SmartDashboard.putNumber("Cube Correction", cubeCorrection);
+					//SmartDashboard.putNumber("Cube Correction", cubeCorrection);
 					Robot.driveTrain.autoDrive(speedMultiplier*RobotMap.AUTO_DRIVE_SPEED - cubeCorrection, speedMultiplier*RobotMap.AUTO_DRIVE_SPEED + cubeCorrection); //flip signs on comp bot
 
 					if(!RobotMap.ABORT_CUBE)
@@ -1144,6 +1190,8 @@ public class GrandTheftAutoCommand extends Command {
 
 							secondTurnAround = false;
 							toScaleFromCube = true;
+							angleCorrection = 0;
+							angleError = 0;
 
 						}
 
@@ -1182,6 +1230,8 @@ public class GrandTheftAutoCommand extends Command {
 							toScaleFromCube = false;
 							scaleProcedure = true; //we re-run the scale procedures above
 							Robot.distanceTraveled = 0;
+							angleCorrection = 0;
+							angleError = 0;
 							
 						}
 
@@ -1223,6 +1273,8 @@ public class GrandTheftAutoCommand extends Command {
 							drivingToPathway = false;
 							turnIntoPath = true;
 							Robot.distanceTraveled = 0;
+							angleCorrection = 0;
+							angleError = 0;
 							
 						}
 
@@ -1255,6 +1307,8 @@ public class GrandTheftAutoCommand extends Command {
 
 							turnIntoPath = false;
 							liftToSwitch = true;
+							angleCorrection = 0;
+							angleError = 0;
 							
 						}
 
@@ -1301,6 +1355,8 @@ public class GrandTheftAutoCommand extends Command {
 
 							turnToSwitch = false;
 							ejectCube = true;
+							angleCorrection = 0;
+							angleError = 0;
 							
 						}
 
@@ -1314,8 +1370,9 @@ public class GrandTheftAutoCommand extends Command {
 
 					Robot.end.endeffector(-1.0);
 
-					if(timer.get() - startTime <= stopTime) {
+					if(stopTime <= timer.get()-startTime) {
 
+						Robot.end.endeffector(0);
 						ejectCube = false;
 						backUp = true;
 
@@ -1367,6 +1424,8 @@ public class GrandTheftAutoCommand extends Command {
 							drivingToPathway = false;
 							turnIntoPath = true;
 							Robot.distanceTraveled = 0;
+							angleCorrection = 0;
+							angleError = 0;
 							
 						}
 
@@ -1398,6 +1457,8 @@ public class GrandTheftAutoCommand extends Command {
 
 							turnIntoPath = false;
 							driveToCloseSwitch = true;
+							angleCorrection = 0;
+							angleError = 0;
 							
 						}
 
@@ -1436,6 +1497,8 @@ public class GrandTheftAutoCommand extends Command {
 							drivingToPathway = false;
 							turnIntoPath = true;
 							Robot.distanceTraveled = 0;
+							angleCorrection = 0;
+							angleError = 0;
 							
 						}
 
@@ -1482,6 +1545,8 @@ public class GrandTheftAutoCommand extends Command {
 
 							turnToSwitch = false;
 							ejectCube = true;
+							angleCorrection = 0;
+							angleError = 0;
 							
 						}
 
@@ -1497,8 +1562,9 @@ public class GrandTheftAutoCommand extends Command {
 
 					Robot.end.endeffector(-1.0);
 
-					if(timer.get() - startTime <= stopTime) {
+					if(stopTime <= timer.get()-startTime) {
 
+						Robot.end.endeffector(0);
 						ejectCube = false;
 						backUp = true;
 
@@ -1520,7 +1586,7 @@ public class GrandTheftAutoCommand extends Command {
 		stopTime = 15;
 		startTime = timer.get();
 
-		if(timer.get() - startTime >= stopTime)
+		if(stopTime <= timer.get()-startTime)
 
 			return true;
 
@@ -1534,6 +1600,12 @@ public class GrandTheftAutoCommand extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
+		
+		//make sure everything has stopped moving
+		Robot.end.angleMotor(0);
+		Robot.end.endeffector(0);
+		Robot.driveTrain.autoStop();
+		
 	}
 
 	// Called when another command which requires one or more of the same

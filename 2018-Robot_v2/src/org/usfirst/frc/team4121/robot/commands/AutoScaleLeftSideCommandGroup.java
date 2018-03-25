@@ -8,21 +8,29 @@ public class AutoScaleLeftSideCommandGroup extends CommandGroup {
         
     	addSequential(new BeginningMatchCommandGroup());
     	
-    	addSequential(new DriveToScaleCommand('L')); //drive appropriate distance depending on side assignment (left or right)
+    	addSequential(new ElevatorToSwitchCommand());
     	
-    	addParallel(new AutoTurn(30, 5, 'L')); //turn; 30 degrees is a test value
+    	addSequential(new AutoDrive(155, -1, 0, 10)); //drive to switch used to
     	
     	addSequential(new toScaleAutoCommand('L'));
     	
-    	addSequential(new AutoAngleMotorCommand());
+    	addSequential(new AutoDrive(100, -1, 0, 10)); //drive to switch used to
+    	
+    	addSequential(new AutoTurn(45, 1.5, 'L')); //turn; 30 degrees is a test value
+    	
+    	//addSequential(new AutoAngleMotorCommand());
     	
     	addSequential(new EjectCubeCommand('L'));
     	
-    	addSequential(new AutoAngleMotorDownCommand());
+    	//addSequential(new AutoAngleMotorDownCommand());
     	
     	//addSequential(new AutoDrive(10, -1, 0, 3)); //make sure the grabber won't hit the scale
     	
-    	addSequential(new ElevatorToHomeCommand());
+    	//addSequential(new ElevatorToHomeCommand());
+    	
+    	//addSequential(new AutoTurn(135, 1.5, 'L'));
+    	
+//    	addSequential(new AutoPickUpCubeCommandGroup());
     	
     }
 }

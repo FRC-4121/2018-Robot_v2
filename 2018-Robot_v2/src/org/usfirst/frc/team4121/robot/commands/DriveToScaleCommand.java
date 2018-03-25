@@ -6,6 +6,7 @@ import org.usfirst.frc.team4121.robot.extraClasses.PIDControl;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -13,10 +14,11 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveToScaleCommand extends Command {
 	
 	char robotStartPos;
-	double direction = 1;
+	double direction = -1; // may be + on comp bot
 	double targetAngle;
 	double angleCorrection;
 	double distance;
+	double angleError;
 	
 	
 	PIDControl pidControl;
@@ -43,7 +45,7 @@ public class DriveToScaleCommand extends Command {
     	
     	if(robotStartPos == RobotMap.AUTO_SCALE_POSITION) {
         	
-    		distance = 260; //distance to drop into scale
+    		distance = 250; //distance to drop into scale
 
     	} else {
     		
@@ -51,8 +53,9 @@ public class DriveToScaleCommand extends Command {
     		
     	}
     	
-		angleCorrection = pidControl.Run(Robot.driveAngle.getDouble(0), targetAngle);
-		Robot.driveTrain.autoDrive(direction*RobotMap.AUTO_DRIVE_SPEED - angleCorrection, direction*RobotMap.AUTO_DRIVE_SPEED + angleCorrection);    	    	
+    	angleError = Robot.driveAngle.getDouble(0)-targetAngle;
+    	angleCorrection = RobotMap.kP_Straight*angleError;
+    	Robot.driveTrain.autoDrive(direction*RobotMap.AUTO_DRIVE_SPEED + angleCorrection, direction*RobotMap.AUTO_DRIVE_SPEED - angleCorrection);    	    	 	    	
 
     }
 
