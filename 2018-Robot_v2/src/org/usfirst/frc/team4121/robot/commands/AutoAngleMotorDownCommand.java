@@ -30,7 +30,7 @@ public class AutoAngleMotorDownCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 	
-		Robot.end.angleMotor(RobotMap.ANGLE_END_EFFECTOR_SPEED);
+		Robot.end.angleMotor(RobotMap.DOWN_ANGLE_END_EFFECTOR_SPEED);
 		
 	}
 

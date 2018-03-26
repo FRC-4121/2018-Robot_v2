@@ -12,11 +12,13 @@ public class AutoScaleLeftSideCommandGroup extends CommandGroup {
     	
     	addSequential(new AutoDrive(155, -1, 0, 10)); //drive to switch used to
     	
+    	//addSequential(new AutoTurn(90, 2, 'R', "Scale"));
+    	
     	addSequential(new toScaleAutoCommand('L'));
     	
     	addSequential(new AutoDrive(100, -1, 0, 10)); //drive to switch used to
     	
-    	addSequential(new AutoTurn(45, 1.5, 'L')); //turn; 30 degrees is a test value
+    	addSequential(new AutoTurn(50, 1.5, 'L', "Scale")); //turn; 30 degrees is a test value
     	
     	//addSequential(new AutoAngleMotorCommand());
     	

@@ -11,33 +11,33 @@ package org.usfirst.frc.team4121.robot;
 public class RobotMap {
 
 	//Motor Controller Constants - Practice Robot
-	public static final int LEFT_MOTOR_MASTER = 0;
-	public static final int LEFT_MOTOR_SLAVE = 15;
-	public static final int RIGHT_MOTOR_MASTER = 4;
-	public static final int RIGHT_MOTOR_SLAVE = 3;
-	public static final int CLIMBER1 = 2;
-	public static final int ENDMOTOR1 = 8;
-	public static final int ENDMOTOR2 = 1;
-	public static final int ELEVATOR_MOTOR_MASTER = 6;
-	public static final int ELEVATOR_MOTOR_SLAVE = 7;
-	public static final int ANGLEMOTOR = 9;
-
-	//Motor Controller Constants - Competition Robots
-//	public static final int LEFT_MOTOR_MASTER = 7;
+//	public static final int LEFT_MOTOR_MASTER = 0;
 //	public static final int LEFT_MOTOR_SLAVE = 15;
 //	public static final int RIGHT_MOTOR_MASTER = 4;
-//	public static final int RIGHT_MOTOR_SLAVE = 1;
-//	public static final int CLIMBER1 = 8;
-//	public static final int ENDMOTOR1 = 6;
-//	public static final int ENDMOTOR2 = 3; 
-//	public static final int ELEVATOR_MOTOR_MASTER = 2;
-//	public static final int ELEVATOR_MOTOR_SLAVE = 0;
-	//public static final int ANGLEMOTOR = 9; //need to change value
+//	public static final int RIGHT_MOTOR_SLAVE = 3;
+//	public static final int CLIMBER1 = 2;
+//	public static final int ENDMOTOR1 = 8;
+//	public static final int ENDMOTOR2 = 1;
+//	public static final int ELEVATOR_MOTOR_MASTER = 6;
+//	public static final int ELEVATOR_MOTOR_SLAVE = 7;
+//	public static final int ANGLEMOTOR = 9;
+
+//	Motor Controller Constants - Competition Robots
+	public static final int LEFT_MOTOR_MASTER = 7;
+	public static final int LEFT_MOTOR_SLAVE = 15;
+	public static final int RIGHT_MOTOR_MASTER = 4;
+	public static final int RIGHT_MOTOR_SLAVE = 1;
+	public static final int CLIMBER1 = 8;
+	public static final int ENDMOTOR1 = 6;
+	public static final int ENDMOTOR2 = 3; 
+	public static final int ELEVATOR_MOTOR_MASTER = 2;
+	public static final int ELEVATOR_MOTOR_SLAVE = 0;
+	public static final int ANGLEMOTOR = 9; //need to change value
 
 	//Motor Speeds
 	public static final double END_EFFECTOR_SPEED = .5;
-	public static final double ANGLE_END_EFFECTOR_SPEED = -.5;//this will angle the arm up because the polarity of the Talon is reversed.  check on competition bot.
-	public static final double DOWN_ANGLE_END_EFFECTOR_SPEED = 1; //this angles down (see above). may need to change for competition bot.
+	public static final double ANGLE_END_EFFECTOR_SPEED = -.65;//this will angle the arm up because the polarity of the Talon is reversed.  check on competition bot.
+	public static final double DOWN_ANGLE_END_EFFECTOR_SPEED = .5; //this angles down (see above). may need to change for competition bot.
 	public static final double DRIVE_SPEED = 0.8;
 	public static double AUTO_DRIVE_SPEED = 0.8;
 	public static double AUTO_TURN_SPEED = 0.4;
@@ -78,7 +78,7 @@ public class RobotMap {
 
 	//Elevator target positions
 	public static final double dPosSwitch = 30 ;
-	public static final double dPosScale = 69;
+	public static final double dPosScale = 74;
 	public static final double dPosPyramid = 17;
 	public static final double dPosBumpUp = 2 ;
 	public static final double dPosBumpDown = -2 ;

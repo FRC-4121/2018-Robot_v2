@@ -1,13 +1,11 @@
 package org.usfirst.frc.team4121.robot;
 
 import org.usfirst.frc.team4121.robot.commands.AutoLeftSideCommandGroup;
-import org.usfirst.frc.team4121.robot.commands.AutoLeftSidePivotCommandGroup;
 import org.usfirst.frc.team4121.robot.commands.AutoRightSideNoTurnCommandGroup;
 import org.usfirst.frc.team4121.robot.commands.AutoScaleLeftSideCommandGroup;
 import org.usfirst.frc.team4121.robot.commands.AutoScaleRightSideCommandGroup;
 import org.usfirst.frc.team4121.robot.commands.AutoStopCommand;
 import org.usfirst.frc.team4121.robot.commands.AutoStraightCommandGroup;
-import org.usfirst.frc.team4121.robot.commands.LogicTestCommandGroup;
 import org.usfirst.frc.team4121.robot.subsystems.ClimberSubsystem;
 import org.usfirst.frc.team4121.robot.subsystems.DriveTrainSubsystem;
 import org.usfirst.frc.team4121.robot.subsystems.ElevatorSubsystem;
@@ -21,6 +19,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -41,6 +40,9 @@ public class Robot extends IterativeRobot {
 	//Camera Stuff
 	public static UsbCamera cam;
 	public static CameraServer server;
+	
+	public static String myTarget;
+	public static String mySide;
 	
 	//Network tables
 	
@@ -84,8 +86,12 @@ public class Robot extends IterativeRobot {
 	public static double rightDistance;
 		
 	//2018 Game Data
-	public static String gameData;
-	public static String switchTargetPosition;
+	public static String gameData = null;
+	public Timer timer = new Timer();
+	public double startTime;
+	public double stopTime;
+	private boolean autoCommandStarted = false;
+	
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -126,6 +132,9 @@ public class Robot extends IterativeRobot {
 		elevator = new ElevatorSubsystem();
 		oi = new OI();
 		
+		mySide = "";
+		myTarget = "";
+		
 		//Camera Server setup
 //		server = CameraServer.getInstance();
 //		cam = new UsbCamera("Main Camera", 0);
@@ -138,13 +147,15 @@ public class Robot extends IterativeRobot {
 		chooser = new SendableChooser<>();
 		chooser.addDefault("Straight", new AutoStraightCommandGroup());
 		chooser.addObject("Left Turn", new AutoLeftSideCommandGroup());
-		chooser.addObject("Left Straight (ish)", new AutoLeftSidePivotCommandGroup());
 		chooser.addObject("Right Straight", new AutoRightSideNoTurnCommandGroup());
 		chooser.addObject("Do nothing", new AutoStopCommand());
-		chooser.addObject("Logic Tester", new LogicTestCommandGroup());
 		chooser.addObject("Left Scale", new AutoScaleLeftSideCommandGroup());
 		chooser.addObject("Right Scale", new AutoScaleRightSideCommandGroup());
+		SmartDashboard.putString("Target", myTarget);
+		SmartDashboard.putString("Side", mySide);
 		SmartDashboard.putData("Auto Mode:", chooser);
+		
+		
 		
 		//Initialize variables
 		distanceTraveled = 0.0;
@@ -208,11 +219,12 @@ public class Robot extends IterativeRobot {
 		zeroGyro.setDouble(1.0);
 		
 		//grab gameData
-		gameData = DriverStation.getInstance().getGameSpecificMessage();
-		RobotMap.AUTO_SWITCH_POSITION = gameData.charAt(0);
-		RobotMap.AUTO_SCALE_POSITION = gameData.charAt(1);
-		RobotMap.AUTO_SWITCH_AND_SCALE = gameData.substring(2);
-
+		//gameData = DriverStation.getInstance().getGameSpecificMessage();
+//		RobotMap.AUTO_SWITCH_POSITION = gameData.charAt(0);
+//		RobotMap.AUTO_SCALE_POSITION = gameData.charAt(1);
+//		RobotMap.AUTO_SWITCH_AND_SCALE = gameData.substring(2);
+		timer.start();
+		startTime = timer.get();
 		//Get selected autonomous command
 		autonomousCommand = chooser.getSelected();
 		
@@ -222,11 +234,7 @@ public class Robot extends IterativeRobot {
 		
 		//start video
 		writeVideo.setDouble(1.0);
-
-		// schedule the autonomous command (example)
-		if (autonomousCommand != null) {
-			autonomousCommand.start();
-		}
+//		String theTarget = SmartDashboard.getString("Target", "");
 	}
 	
 	
@@ -236,6 +244,40 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		
+		//in case the game data is not properly set, we give the field 10 seconds, then default to AutoStraightCommandGroup
+		stopTime = 10;
+		
+		if(stopTime <= timer.get() - startTime && gameData == null) { //timer check code
+		
+			//drive forward if it's been 10 seconds w/o game data
+			autonomousCommand = new AutoStraightCommandGroup();
+			autonomousCommand.start();
+			
+		} else { //if timer hasn't stopped yet, grab the data
+			
+			String testGameData = DriverStation.getInstance().getGameSpecificMessage();
+			
+			//if the data contains useful stuff, use it!
+			if(testGameData != null || testGameData != "") {
+				
+				gameData = testGameData;
+				RobotMap.AUTO_SWITCH_POSITION = gameData.charAt(0);
+				RobotMap.AUTO_SCALE_POSITION = gameData.charAt(1);
+				RobotMap.AUTO_SWITCH_AND_SCALE = gameData.substring(2);
+				
+				//if we are putting grand auto logic happens here.
+				
+				if(!autoCommandStarted) {
+					
+					autonomousCommand.start();
+					autoCommandStarted = true;
+				
+				}
+			
+			}
+		
+		}
+		
 		//Start autonomous scheduler
 		Scheduler.getInstance().run();
 		
@@ -244,6 +286,7 @@ public class Robot extends IterativeRobot {
 		//SmartDashboard.putString("Left Drive Distance: ", Double.toString(Robot.oi.leftEncoder.getDistance()));
 		//SmartDashboard.putString("Right Drive Distance: ", Double.toString(Robot.oi.rightEncoder.getDistance()));
 		SmartDashboard.putString("Gear Position: ", shifter.gearPosition());
+	
 	}
 	
 	@Override

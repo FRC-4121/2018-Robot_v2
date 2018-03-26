@@ -1,17 +1,13 @@
 package org.usfirst.frc.team4121.robot.commands;
 
-import org.usfirst.frc.team4121.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class StopEndEffectorCommand extends Command {
+public class AutoStraightAcross extends Command {
 
-    public StopEndEffectorCommand() {
-    	requires(Robot.end);
-    	
+    public AutoStraightAcross() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -22,7 +18,6 @@ public class StopEndEffectorCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.end.stopWithLimitSwitch(); 
     }
 
     // Make this return true when this Command no longer needs to run execute()

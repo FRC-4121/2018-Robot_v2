@@ -29,14 +29,16 @@ public class AutoTurn extends Command {
 	//	private PIDOutput pidOutput;
 	//	
 	private Timer timer = new Timer();
+	private String destination;
 
 
 	//Class constructor
-	public AutoTurn(double angle, double time, char side) { //change in smartdashboard
+	public AutoTurn(double angle, double time, char side, String Destination) { //change in smartdashboard
 
 		targetAngle = angle;
 		stopTime = time;
 		robotSide = side;
+		destination = Destination;
 
 		requires(Robot.driveTrain);
 
@@ -74,24 +76,32 @@ public class AutoTurn extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if (robotSide == 'N' || robotSide == RobotMap.AUTO_SWITCH_POSITION)
-		{
+		if(destination == "Switch") {
+			if (robotSide == 'N' || robotSide == RobotMap.AUTO_SWITCH_POSITION)
+			{
+	
+				angleCorrection = pidControl.Run(Robot.driveAngle.getDouble(0), targetAngle);
 
-			angleCorrection = pidControl.Run(Robot.driveAngle.getDouble(0), targetAngle);
-			//angleCorrection= RobotMap.kD_Straight*(Robot.oi.MainGyro.getAngle()-targetAngle);
-			motorOutput = angleCorrection * RobotMap.AUTO_TURN_SPEED;
-			//    	if (motorOutput > 1.0)
-			//    	{
-			//    		motorOutput = 1.0;
-			//    	}
-			//    	else if (motorOutput < 0.0)
-			//    	{
-			//    		motorOutput = 0.0;
-			//    	}
-			Robot.driveTrain.autoDrive(motorOutput, -motorOutput);  
-			//SmartDashboard.putString("Drive Angle:", Double.toString(Robot.oi.MainGyro.getAngle()));
+				motorOutput = angleCorrection * RobotMap.AUTO_TURN_SPEED;
+			
+				Robot.driveTrain.autoDrive(motorOutput, -motorOutput);  
+				//SmartDashboard.putString("Drive Angle:", Double.toString(Robot.oi.MainGyro.getAngle()));
+			}
+		} else {
+			
+			if (robotSide == 'N' || robotSide == RobotMap.AUTO_SCALE_POSITION)
+			{
+
+				angleCorrection = pidControl.Run(Robot.driveAngle.getDouble(0), targetAngle);
+				
+				motorOutput = angleCorrection * RobotMap.AUTO_TURN_SPEED;
+				
+				Robot.driveTrain.autoDrive(motorOutput, -motorOutput);  
+				//SmartDashboard.putString("Drive Angle:", Double.toString(Robot.oi.MainGyro.getAngle()));
+			}
+			
+			
 		}
-
 
 	}
 

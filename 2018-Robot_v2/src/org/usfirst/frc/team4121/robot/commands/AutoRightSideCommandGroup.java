@@ -17,7 +17,7 @@ public class AutoRightSideCommandGroup extends CommandGroup {
     	//addSequential(new ShiftUpCommand());
     	addSequential(new ElevatorToSwitchCommand());
     	addSequential(new AutoDrive(133, -1, 0, 7)); //drive to switch
-    	addSequential(new AutoTurn(-90, 3, 'R'));
+    	addSequential(new AutoTurn(-90, 3, 'R', "Switch"));
     	addSequential(new EjectCubeCommand('R'));
         // would require.
         // e.g. if Command1 requires chassis, and Command2 requires arm,

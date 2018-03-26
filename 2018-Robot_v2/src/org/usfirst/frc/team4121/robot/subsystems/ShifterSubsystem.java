@@ -19,7 +19,7 @@ public class ShifterSubsystem extends Subsystem {
 	Compressor compressor = new Compressor(RobotMap.COMPRESSOR);
 	
 	//initializes the double solenoid
-	public DoubleSolenoid shifterSolenoid = new DoubleSolenoid(0,1);
+	public DoubleSolenoid shifterSolenoid = new DoubleSolenoid(2,3);
 	
     public void initDefaultCommand() {
     }
