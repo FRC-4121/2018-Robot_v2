@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4121.robot;
 
+import org.usfirst.frc.team4121.robot.commands.AuotScaleLeftOppositeSide;
 import org.usfirst.frc.team4121.robot.commands.AutoLeftSideCommandGroup;
 import org.usfirst.frc.team4121.robot.commands.AutoRightSideNoTurnCommandGroup;
 import org.usfirst.frc.team4121.robot.commands.AutoScaleLeftSideCommandGroup;
@@ -151,6 +152,7 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Do nothing", new AutoStopCommand());
 		chooser.addObject("Left Scale", new AutoScaleLeftSideCommandGroup());
 		chooser.addObject("Right Scale", new AutoScaleRightSideCommandGroup());
+		chooser.addObject("Rightside Opposite Scale", new AuotScaleLeftOppositeSide());
 		SmartDashboard.putString("Target", myTarget);
 		SmartDashboard.putString("Side", mySide);
 		SmartDashboard.putData("Auto Mode:", chooser);
@@ -282,9 +284,7 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		
 		//Put key values on smart dashboard
-		
-		//SmartDashboard.putString("Left Drive Distance: ", Double.toString(Robot.oi.leftEncoder.getDistance()));
-		//SmartDashboard.putString("Right Drive Distance: ", Double.toString(Robot.oi.rightEncoder.getDistance()));
+	
 		SmartDashboard.putString("Gear Position: ", shifter.gearPosition());
 	
 	}
@@ -314,16 +314,13 @@ public class Robot extends IterativeRobot {
 		//Put key values on the SmartDashboard
 		SmartDashboard.putString("Gear Postion: ", shifter.gearPosition());
 		SmartDashboard.putString("Drive Direction:", Integer.toString(RobotMap.DIRECTION_MULTIPLIER));		
-		//SmartDashboard.putNumber("Gyro Reading:", oi.MainGyro.getAngle());
+		
 		//SmartDashboard.putNumber("Master Current", Robot.elevator.m_motor.getOutputCurrent());
 		//SmartDashboard.putNumber("Slave Current", Robot.elevator.m_motor2_follower.getOutputCurrent());
 		//SmartDashboard.putNumber("Master Output", Robot.elevator.m_motor.getMotorOutputPercent());
 		//SmartDashboard.putNumber("Slave Output", Robot.elevator.m_motor2_follower.getMotorOutputPercent());
-		SmartDashboard.putNumber("Elevator Current Position", Robot.elevator.targetPos);
-		//SmartDashboard.putString("Right Drive Distance (in inches): ", Double.toString(Robot.oi.rightEncoder.getDistance()));
-		//SmartDashboard.putString("Left Drive Distance (in inches): ", Double.toString(Robot.oi.leftEncoder.getDistance()));		
-		//SmartDashboard.putString("Limit Switch: ", Boolean.toString(Robot.oi.limitSwitch.get()));
-		//SmartDashboard.putString("Drive Angle: ", Double.toString(Robot.oi.MainGyro.getAngle())); //gyro on the pi
+	
+	
 	
 	}
 	

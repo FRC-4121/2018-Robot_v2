@@ -184,7 +184,7 @@ public class ElevatorSubsystem extends Subsystem {
 			m_motor.configMotionAcceleration((int) accelDn, RobotMap.kTimeoutMs);
 			m_motor.set(ControlMode.MotionMagic, targetPos);
 		}
-		SmartDashboard.putNumber("Elevator Encoder:", m_motor.getSelectedSensorPosition(RobotMap.ELEVATOR_MOTOR_MASTER));
+		
 	}
 	
 /* new functions here - bump up and bump down */

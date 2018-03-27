@@ -30,10 +30,7 @@ public class ClimbCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-//    	if(!Robot.oi.limitSwitchClimbUpperStop.get()) //limit switch is tripped command will be done
-//    	{
-//    		return true;
-//    	}
+
         return false;
     }
 
