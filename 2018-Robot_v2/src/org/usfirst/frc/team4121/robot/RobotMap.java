@@ -79,7 +79,7 @@ public class RobotMap {
 	//Elevator target positions
 	public static final double dPosSwitch = 30 ;
 	public static final double dPosScale = 74;
-	public static final double dPosPyramid = 17;
+	public static final double dPosPyramid = 10;
 	public static final double dPosBumpUp = 2 ;
 	public static final double dPosBumpDown = -2 ;
 	public static final double dFudgeFactor = 1.135 ;  // actual distance/programmed distance
