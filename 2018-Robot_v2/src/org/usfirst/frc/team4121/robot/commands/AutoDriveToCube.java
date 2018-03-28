@@ -81,7 +81,7 @@ public class AutoDriveToCube extends Command {
 		if(!RobotMap.ABORT_CUBE)
 		{
 			//Check elapsed time
-			if(Robot.cubePercentWidth.getDouble(0) > 85) //when cube takes up majority of screen you are done need to change value
+			if(Robot.cubePercentWidth.getDouble(0) > 80) //when cube takes up majority of screen you are done need to change value
 			{
 
 				//Too much time has elapsed.  Stop this command.
@@ -105,6 +105,12 @@ public class AutoDriveToCube extends Command {
 		{
 			thereYet = true;
 		}
+		
+		if (thereYet) {
+			Robot.driveTrain.autoDrive(0, 0);
+		}
+		
+		
 		return thereYet;
 
 

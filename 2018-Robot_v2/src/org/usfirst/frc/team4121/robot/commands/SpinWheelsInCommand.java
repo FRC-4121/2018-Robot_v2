@@ -34,7 +34,7 @@ public class SpinWheelsInCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	Robot.end.endeffector(.75);
+    	Robot.end.endeffector(.85);
     	
     }
 

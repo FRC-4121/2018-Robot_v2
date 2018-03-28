@@ -21,87 +21,44 @@ public class AutoTurn extends Command {
 	double angleError;
 	double angleCorrection;
 	double motorOutput;
-	private char robotSide;
 
 	PIDControl pidControl;
 
-	//	private PIDController pid;
-	//	private PIDOutput pidOutput;
-	//	
 	private Timer timer = new Timer();
-	private String destination;
+
 
 
 	//Class constructor
-	public AutoTurn(double angle, double time, char side, String Destination) { //change in smartdashboard
+	public AutoTurn(double angle, double time) { //change in smartdashboard
 
 		targetAngle = angle;
 		stopTime = time;
-		robotSide = side;
-		destination = Destination;
 
 		requires(Robot.driveTrain);
 
 		//set up PID controller
 		pidControl = new PIDControl(RobotMap.kP_Turn, RobotMap.kI_Turn, RobotMap.kD_Turn);
 
-		//    	pidOutput = new PIDOutput() {
-		//    		
-		//    		@Override
-		//    		public void pidWrite(double d) {
-		//    			//Robot.driveTrain.autoDrive(-d*0.6, d*0.6);
-		//    		}
-		//    	};
-		//    	
-		//    	pid = new PIDController(0.05, 0.0, 0.0, Robot.oi.MainGyro, pidOutput);
-		//    	pid.setAbsoluteTolerance(RobotMap.ANGLE_TOLERANCE);
-		//    	pid.setContinuous();
-		//    	pid.setSetpoint(angle);
 	}
 
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
 
-		//    	pid.reset();
-		//        pid.enable();
 		timer.start();
 		startTime = timer.get();
 		angleError = 0;
 		angleCorrection = 0;
-
 
 	}
 
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if(destination == "Switch") {
-			if (robotSide == 'N' || robotSide == RobotMap.AUTO_SWITCH_POSITION)
-			{
-	
-				angleCorrection = pidControl.Run(Robot.driveAngle.getDouble(0), targetAngle);
 
-				motorOutput = angleCorrection * RobotMap.AUTO_TURN_SPEED;
-			
-				Robot.driveTrain.autoDrive(motorOutput, -motorOutput);  
-				//SmartDashboard.putString("Drive Angle:", Double.toString(Robot.oi.MainGyro.getAngle()));
-			}
-		} else {
-			
-			if (robotSide == 'N' || robotSide == RobotMap.AUTO_SCALE_POSITION)
-			{
-
-				angleCorrection = pidControl.Run(Robot.driveAngle.getDouble(0), targetAngle);
-				
-				motorOutput = angleCorrection * RobotMap.AUTO_TURN_SPEED;
-				
-				Robot.driveTrain.autoDrive(motorOutput, -motorOutput);  
-				//SmartDashboard.putString("Drive Angle:", Double.toString(Robot.oi.MainGyro.getAngle()));
-			}
-			
-			
-		}
+		angleCorrection = pidControl.Run(Robot.driveAngle.getDouble(0), targetAngle);
+		motorOutput = angleCorrection * RobotMap.AUTO_TURN_SPEED;
+		Robot.driveTrain.autoDrive(motorOutput, -motorOutput);  
 
 	}
 
@@ -117,7 +74,6 @@ public class AutoTurn extends Command {
 		{
 
 			//Too much time has elapsed.  Stop this command
-			//pid.disable();
 			thereYet = true;
 
 		}
@@ -133,8 +89,6 @@ public class AutoTurn extends Command {
 
 		}
 
-		//Put PID status on dashboard
-		//SmartDashboard.putString("Angle Reached Yet:", Boolean.toString(pid.onTarget()));
 
 		//Return the flag
 		return thereYet;
@@ -145,7 +99,6 @@ public class AutoTurn extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 
-		//pid.disable();
 		Robot.driveTrain.autoStop(); //maybe don't need depends on robot
 
 	}
@@ -155,7 +108,8 @@ public class AutoTurn extends Command {
 	// subsystems is scheduled to run
 	protected void interrupted() {
 
-		//pid.disable();
-
+		Robot.driveTrain.autoStop(); //maybe don't need depends on robot
+		
 	}
+	
 }

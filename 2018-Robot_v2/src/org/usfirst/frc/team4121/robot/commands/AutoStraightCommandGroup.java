@@ -9,8 +9,10 @@ public class AutoStraightCommandGroup extends CommandGroup {
 
     public AutoStraightCommandGroup() {
        
+    	
+    	addSequential(new ShiftDownCommand());
+    	addSequential(new AutoDrive(150, -1, 0, 15)); 
     	addSequential(new BeginningMatchCommandGroup());
-    	addSequential(new AutoDrive(220, -1, 0, 7)); 
     	
     }
     

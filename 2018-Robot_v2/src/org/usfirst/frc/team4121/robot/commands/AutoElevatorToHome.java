@@ -8,29 +8,49 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ElevatorToSwitchCommand extends Command {
+public class AutoElevatorToHome extends Command {
+
+	private Timer liftTimer;
+	private double startTime;
+	private double stopTime;
 	
-    public ElevatorToSwitchCommand() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    public AutoElevatorToHome(double time) {
+    	
     	requires(Robot.elevator);
-//    	liftTimer = new Timer();
+    	
+    	stopTime = time;
+
     }
 
+    
     // Called just before this Command runs the first time
     protected void initialize() {
     	
+    	liftTimer = new Timer();
+    	liftTimer.start();
+    	startTime = liftTimer.get();
+    	
     }
 
+    
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	Robot.elevator.runToSwitch();
+    	Robot.elevator.goToHome();
+
     }
 
+    
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+    	
+    	boolean thereYet = false;
+    	
+    	if (stopTime <= liftTimer.get() - startTime) {
+    		thereYet = true;
+    	}
+    	
+        return thereYet;
     }
 
     // Called once after isFinished returns true

@@ -39,8 +39,8 @@ public class RobotMap {
 	public static final double ANGLE_END_EFFECTOR_SPEED = -.65;//this will angle the arm up because the polarity of the Talon is reversed.  check on competition bot.
 	public static final double DOWN_ANGLE_END_EFFECTOR_SPEED = .5; //this angles down (see above). may need to change for competition bot.
 	public static final double DRIVE_SPEED = 0.8;
-	public static double AUTO_DRIVE_SPEED = 0.8;
-	public static double AUTO_TURN_SPEED = 0.4;
+	public static double AUTO_DRIVE_SPEED = .95;
+	public static double AUTO_TURN_SPEED = 0.3;
 	public static double CLIMBER_SPEED = -1.0; //should be negative
 	public static double CLIMBER_REVERSE_SPEED = 1.0; //should be positive
 
@@ -55,9 +55,9 @@ public class RobotMap {
 	public static boolean ABORT_CUBE= false;
 
 	//PID values
-	public static double kP_Straight = 0.02;
+	public static double kP_Straight = 0.03;
 	public static double kP_Cube = .2;
-	public static double kP_Turn = 0.05;
+	public static double kP_Turn = 0.06;
 	public static double kI_Straight = 0.0;
 	public static double kI_Turn = 0.0;
 	public static double kD_Straight = 0.0;
