@@ -24,7 +24,7 @@ public class AutoAngleMotorDownCommand extends Command {
 	protected void initialize() {
 		timer.start();
 		startTime = timer.get();//I want to use a limit switch here instead of timer.
-    	time = 1;//test value
+    	time = .90;//test value
 	}
 
 	// Called repeatedly when this Command is scheduled to run

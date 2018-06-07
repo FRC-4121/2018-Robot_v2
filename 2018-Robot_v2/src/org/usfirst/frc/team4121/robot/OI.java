@@ -17,6 +17,7 @@ import org.usfirst.frc.team4121.robot.commands.ElevatorToSwitchCommand;
 import org.usfirst.frc.team4121.robot.commands.OpenArmsCommand;
 import org.usfirst.frc.team4121.robot.commands.ShiftDownCommand;
 import org.usfirst.frc.team4121.robot.commands.ShiftUpCommand;
+import org.usfirst.frc.team4121.robot.commands.SpinWheelsOutCommand;
 import org.usfirst.frc.team4121.robot.commands.StopAngleMotorCommand;
 import org.usfirst.frc.team4121.robot.commands.StopClimbCommand;
 import org.usfirst.frc.team4121.robot.commands.SwitchDriveCommand;
@@ -40,7 +41,7 @@ public class OI {
 	//General Declarations of Objects
 	public Joystick leftJoy, rightJoy;
 	public XboxController xbox;
-	public DigitalInput limitSwitchClimbBottomStop,limitSwitchClimbUpperStop;
+	public DigitalInput limitSwitchClimbBottomStop, limitSwitchClimbUpperStop, clawLimitSwitch;
 	//public ADXRS450_Gyro MainGyro;
 	public Encoder rightEncoder, leftEncoder;
 	public Button climb, reverseClimb, servo, shiftUp, shiftDown, switchDrive;
@@ -52,8 +53,10 @@ public class OI {
 	public OI() {
 	
 		//Limit Switch Initializations
-		limitSwitchClimbBottomStop = new DigitalInput(0);  
-		limitSwitchClimbUpperStop = new DigitalInput(1);		
+//		limitSwitchClimbBottomStop = new DigitalInput(0);  
+//		limitSwitchClimbUpperStop = new DigitalInput(2);
+//		clawLimitSwitch = new DigitalInput(0);
+		
 		
 		//Initialize gyro
 		//MainGyro = new ADXRS450_Gyro();
@@ -104,12 +107,13 @@ public class OI {
 		openGrabberJoy.whenPressed(new OpenArmsCommand());
 		closeGrabberJoy.whenPressed(new ClosedArmsCommand());
 		abortAutoDriveToCube.whenPressed(new AbortAutoDriveToCube());
-		testBeginMatch.whenPressed(new AutoAngleMotorDownCommand());
+		testBeginMatch.whenPressed(new BeginningMatchCommandGroup());
 		
 		//define right joystick button commands
 		//beginMatch.whenPressed(new BeginningMatchCommandGroup());
 		takeInCubeJoy.whenPressed(new TakeInCubeCommandGroup());
 		spinWheelsOutJoy.whenPressed(new EjectCubeCommandGroup());
+		
 		switchDrive.whenPressed(new SwitchDriveCommand());
 		autoDriveToCube.whenPressed(new AutoPickUpCubeCommandGroup());
 		endAngleMotorUp.whileHeld(new AngleMotorCommand());

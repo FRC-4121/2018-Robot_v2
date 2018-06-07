@@ -13,12 +13,13 @@ public class AutoRobotLeftScaleLeft2Cubes extends CommandGroup {
     	addSequential(new ElevatorToSwitchCommand());
     	addSequential(new AutoDrive(155, -1, 0, 5)); 
     	addSequential(new ElevatorToScaleCommand());
-    	addSequential(new AutoDrive(100, -1, 0, 5));
+    	addSequential(new AutoDrive(110, -1, 0, 5)); //used to be 100
     	addSequential(new AutoTurn(50, 1.5));
-    	addSequential(new EjectCubeCommand(-0.75));
-    	addSequential(new AutoDrive(10, 1, -130, 3));
+    	addSequential(new EjectCubeCommand(-.58));
+    	addSequential(new OpenArmsCommand());
+    	//addSequential(new AutoDrive(10, 1, -130, 3));
     	addSequential(new AutoElevatorToHome(3.0));
-    	addSequential(new AutoTurn(135, 1.5));
+    	addSequential(new AutoTurn(145, 1.5));
     	addSequential(new AutoPickUpCubeCommandGroup());
     	addSequential(new AutoDrive(10, 1, 0, 2)); 
 

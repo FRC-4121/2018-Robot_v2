@@ -1,6 +1,8 @@
 package org.usfirst.frc.team4121.robot;
 
 import org.usfirst.frc.team4121.robot.commands.AutoRightSideNoTurnCommandGroup;
+import org.usfirst.frc.team4121.robot.commands.AutoRobotCenterSwitchLeft1Cube;
+import org.usfirst.frc.team4121.robot.commands.AutoRobotCenterSwitchRight1Cube;
 import org.usfirst.frc.team4121.robot.commands.AutoRobotLeftScaleLeft1Cube;
 import org.usfirst.frc.team4121.robot.commands.AutoRobotLeftScaleLeft2Cubes;
 import org.usfirst.frc.team4121.robot.commands.AutoRobotLeftScaleRight1Cube;
@@ -164,17 +166,17 @@ public class Robot extends IterativeRobot {
 
 		//Initialize dashboard choosers
 		//!!Update this to reflect any new auto code!!
-//		chooser = new SendableChooser<>();
-//		chooser.addObject("Do nothing", new AutoStopCommand());
-//		chooser.addDefault("Straight", new AutoStraightCommandGroup());
-//		chooser.addObject("Left Switch", new AutoRobotLeftSwitchLeft1Cube());
-//		chooser.addObject("Right Switch", new AutoRobotRightSwitchRight1Cube());
-//		chooser.addObject("Right Straight", new AutoRightSideNoTurnCommandGroup());
-//		chooser.addObject("Left Scale", new AutoRobotLeftScaleLeft1Cube());
-//		chooser.addObject("Right Scale", new AutoRobotRightScaleRight1Cube());
-//		chooser.addObject("Rightside Opposite Scale", new AutoRobotRightScaleLeft1Cube());
-//		chooser.addObject("Leftside Opposite Scale", new AutoRobotLeftScaleRight1Cube());
-//		SmartDashboard.putData("Auto Mode:", chooser);
+		//		chooser = new SendableChooser<>();
+		//		chooser.addObject("Do nothing", new AutoStopCommand());
+		//		chooser.addDefault("Straight", new AutoStraightCommandGroup());
+		//		chooser.addObject("Left Switch", new AutoRobotLeftSwitchLeft1Cube());
+		//		chooser.addObject("Right Switch", new AutoRobotRightSwitchRight1Cube());
+		//		chooser.addObject("Right Straight", new AutoRightSideNoTurnCommandGroup());
+		//		chooser.addObject("Left Scale", new AutoRobotLeftScaleLeft1Cube());
+		//		chooser.addObject("Right Scale", new AutoRobotRightScaleRight1Cube());
+		//		chooser.addObject("Rightside Opposite Scale", new AutoRobotRightScaleLeft1Cube());
+		//		chooser.addObject("Leftside Opposite Scale", new AutoRobotLeftScaleRight1Cube());
+		//		SmartDashboard.putData("Auto Mode:", chooser);
 
 		//Initialize variables
 		distanceTraveled = 0.0;
@@ -234,6 +236,8 @@ public class Robot extends IterativeRobot {
 		//		{
 		//			System.out.println(e);
 		//		}
+		//robotStop.setDouble(1.0);
+
 
 	}
 
@@ -243,6 +247,7 @@ public class Robot extends IterativeRobot {
 
 		//Start scheduler
 		Scheduler.getInstance().run();
+
 
 	}
 
@@ -277,7 +282,9 @@ public class Robot extends IterativeRobot {
 		//Get game related data from SmartDashboard
 		mySide = SmartDashboard.getString("Side", "LEFT");
 		myTarget = SmartDashboard.getString("Target", "SCALE");
-		numberOfCubes = SmartDashboard.getNumber("Cubes", 1.0);
+		numberOfCubes = SmartDashboard.getNumber("Cubes", 2.0);
+		
+		autonomousCommand = new AutoStraightCommandGroup();
 
 		//		currentDate = new Date();
 		//		String message = fullTimeFormat.format(currentDate) + "==>  Robot Start Side: " + mySide;
@@ -314,9 +321,9 @@ public class Robot extends IterativeRobot {
 		//in case the game data is not properly set, we give the field 10 seconds, then default to AutoStraightCommandGroup
 		stopTime = 10;
 
-		SmartDashboard.putString("Test Target", myTarget);
-		SmartDashboard.putString("Test Side", mySide);
-		SmartDashboard.putNumber("Test Number Of Cubes", numberOfCubes);
+		//		SmartDashboard.putString("Test Target", myTarget);
+		//		SmartDashboard.putString("Test Side", mySide);
+		//		SmartDashboard.putNumber("Test Number Of Cubes", numberOfCubes);
 
 		if(stopTime <= timer.get() - startTime && gameData == null) { //timer check code
 
@@ -326,18 +333,6 @@ public class Robot extends IterativeRobot {
 				autonomousCommand.start();
 				autoCommandStarted = true;
 			}
-
-			//Log message
-			//			currentDate = new Date();
-			//			String message = fullTimeFormat.format(currentDate) + "==>  Game data not received wthin 10 seconds.  Default command used.";
-			//			try
-			//			{
-			//				logger.write(message);
-			//			}
-			//			catch (IOException e)
-			//			{
-			//
-			//			}
 
 		} else { //if timer hasn't stopped yet, grab the data
 
@@ -351,20 +346,6 @@ public class Robot extends IterativeRobot {
 				RobotMap.AUTO_SWITCH_POSITION = gameData.charAt(0);
 				RobotMap.AUTO_SCALE_POSITION = gameData.charAt(1);
 				RobotMap.AUTO_SWITCH_AND_SCALE = gameData.substring(2);
-
-
-				//				//Log message
-				//				currentDate = new Date();
-				//				String message = fullTimeFormat.format(currentDate) + "==>  Game data received.  Data = " + gameData;
-				//				try
-				//				{
-				//					logger.write(message);
-				//				}
-				//				catch (IOException e)
-				//				{
-				//
-				//				}
-
 
 				//determine which command to run
 				if (mySide.toUpperCase().equals("LEFT"))
@@ -392,6 +373,7 @@ public class Robot extends IterativeRobot {
 						}
 
 					}
+					
 					else
 					{
 
@@ -425,7 +407,22 @@ public class Robot extends IterativeRobot {
 					}
 
 				}
-				else
+				else if(mySide.toUpperCase().equals("CENTER"))
+				{
+					if(RobotMap.AUTO_SWITCH_POSITION == 'L')
+					{
+						autonomousCommand = new AutoRobotCenterSwitchLeft1Cube();														
+					
+					}
+					else
+					{
+						autonomousCommand = new AutoRobotCenterSwitchRight1Cube();														
+						
+					}
+				}
+				
+				
+				else if(mySide.toUpperCase().equals("RIGHT"))
 				{
 
 					if (myTarget.toUpperCase().equals("SWITCH"))
@@ -450,7 +447,8 @@ public class Robot extends IterativeRobot {
 						}
 
 					}
-					else
+					
+					else 
 					{
 
 						if (RobotMap.AUTO_SCALE_POSITION == 'L')
@@ -483,10 +481,15 @@ public class Robot extends IterativeRobot {
 					}
 
 				}
+				else //this is for going straight
+				{
+					autonomousCommand = new AutoStraightCommandGroup();
+				}
 
 			}
 
 		}
+
 
 
 		//Start the selected command

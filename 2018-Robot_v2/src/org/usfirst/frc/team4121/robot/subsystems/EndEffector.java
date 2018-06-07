@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4121.robot.subsystems;
 
+import org.usfirst.frc.team4121.robot.Robot;
 import org.usfirst.frc.team4121.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -27,6 +28,7 @@ public class EndEffector extends Subsystem {
 	
 	
 	
+	
 	//solenoid setup
 	Compressor compressor = new Compressor(RobotMap.COMPRESSOR); //change this value
 	public DoubleSolenoid armSolenoid = new DoubleSolenoid(0,1);
@@ -51,6 +53,11 @@ public class EndEffector extends Subsystem {
     	anglemotor.set(turnspeed);
     	
     }
+//    public void stopArmWithLimitSwitch() {
+//    	if(Robot.oi.clawLimitSwitch.get()) {
+//    		anglemotor.set(0);
+//    	}
+//    }
     
     //for auto take in cube command
     public void autoTakeInCube()
