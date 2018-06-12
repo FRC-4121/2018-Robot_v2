@@ -45,7 +45,7 @@ import java.util.*;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  * 
- * @author Saliva Crustyman
+ * @author Go Away Sylvia
  */
 public class Robot extends IterativeRobot {
 
@@ -142,7 +142,7 @@ public class Robot extends IterativeRobot {
 		cubeOffset = visionTable.getEntry("CubeOffset");
 		cubePercentWidth = visionTable.getEntry("CubePercentWidth");
 		writeVideo = visionTable.getEntry("WriteVideo");
-		cubeHeight = visionTable.getEntry("cubeHeight");
+		cubeHeight = visionTable.getEntry("CubeHeight");
 		driveAngle = navxTable.getEntry("DriveAngle");
 		yVelocity = navxTable.getEntry("YVelocity");
 		xVelocity = navxTable.getEntry("XVelocity");
@@ -163,21 +163,6 @@ public class Robot extends IterativeRobot {
 		elevator = new ElevatorSubsystem();
 		oi = new OI();
 
-
-		//Initialize dashboard choosers
-		//!!Update this to reflect any new auto code!!
-		//		chooser = new SendableChooser<>();
-		//		chooser.addObject("Do nothing", new AutoStopCommand());
-		//		chooser.addDefault("Straight", new AutoStraightCommandGroup());
-		//		chooser.addObject("Left Switch", new AutoRobotLeftSwitchLeft1Cube());
-		//		chooser.addObject("Right Switch", new AutoRobotRightSwitchRight1Cube());
-		//		chooser.addObject("Right Straight", new AutoRightSideNoTurnCommandGroup());
-		//		chooser.addObject("Left Scale", new AutoRobotLeftScaleLeft1Cube());
-		//		chooser.addObject("Right Scale", new AutoRobotRightScaleRight1Cube());
-		//		chooser.addObject("Rightside Opposite Scale", new AutoRobotRightScaleLeft1Cube());
-		//		chooser.addObject("Leftside Opposite Scale", new AutoRobotLeftScaleRight1Cube());
-		//		SmartDashboard.putData("Auto Mode:", chooser);
-
 		//Initialize variables
 		distanceTraveled = 0.0;
 		angleTraveled = 0.0;
@@ -194,18 +179,6 @@ public class Robot extends IterativeRobot {
 		currentDate = new Date();
 		fullDateFormat = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
 		fullTimeFormat = new SimpleDateFormat("hh:mm:ss");
-
-
-		//Initialize logging file
-		//		String logFilename = "C:\\Users\\team4\\Logs\\RobotLog" + fullDateFormat.format(currentDate) + ".txt";
-		//		try
-		//		{
-		//			logger = new FileWriter(logFilename, true);
-		//		}
-		//		catch (IOException e)
-		//		{
-		//			
-		//		}
 
 	}
 
@@ -226,17 +199,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
-		//Close log file
-		//		try
-		//		{
-		//			logger.close();
-		//		}
-		//		catch (IOException e)
-		//		{
-		//			System.out.println(e);
-		//		}
-		//robotStop.setDouble(1.0);
 
 
 	}
@@ -285,25 +247,6 @@ public class Robot extends IterativeRobot {
 		numberOfCubes = SmartDashboard.getNumber("Cubes", 2.0);
 		
 		autonomousCommand = new AutoStraightCommandGroup();
-
-		//		currentDate = new Date();
-		//		String message = fullTimeFormat.format(currentDate) + "==>  Robot Start Side: " + mySide;
-		//		String message2 = fullTimeFormat.format(currentDate) + "==>  Auto Target: " + myTarget;
-		//		String message3 = fullTimeFormat.format(currentDate) + "==>  Number of Cubes: " + numberOfCubes;
-		//		try
-		//		{
-		//			logger.write(message);
-		//			logger.write(message2);
-		//			logger.write(message3);
-		//		}
-		//		catch (IOException e)
-		//		{
-		//
-		//		}
-
-		//Get selected autonomous command
-		//autonomousCommand = chooser.getSelected();
-
 
 		//Start game data timer
 		timer.start();
