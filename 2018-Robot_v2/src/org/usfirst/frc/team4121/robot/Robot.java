@@ -45,14 +45,14 @@ import java.util.*;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  * 
- * @author Go Away Sylvia
+ * @author Jonas Muhlenkamp
  */
+
 public class Robot extends IterativeRobot {
 
 	//Camera Stuff
 	public static UsbCamera cam;
 	public static CameraServer server;
-
 
 	//Network tables
 	public static NetworkTableInstance dataTableInstance;
@@ -72,7 +72,6 @@ public class Robot extends IterativeRobot {
 	public static NetworkTableEntry zeroGyro;
 	public static NetworkTableEntry writeVideo;
 
-
 	//Subsystems
 	public static DriveTrainSubsystem driveTrain;
 	public static ShifterSubsystem shifter;
@@ -80,25 +79,17 @@ public class Robot extends IterativeRobot {
 	public static EndEffector end;
 	public static ElevatorSubsystem elevator;
 
-
 	//Sensors and inputs
 	public static OI oi;
 
-
-	//SmartDashboard chooser
-	private SendableChooser<Command> chooser;
-
-
 	//Commands
 	private Command autonomousCommand;
-
 
 	//encoder math values
 	public static double distanceTraveled;
 	public static double angleTraveled;
 	public static double leftDistance;
 	public static double rightDistance;
-
 
 	//2018 Game specific variables
 	public static String gameData = null;
@@ -110,22 +101,11 @@ public class Robot extends IterativeRobot {
 	public static String mySide;
 	public static double numberOfCubes;
 
-
-	//Time
-	public Date currentDate;
-	public SimpleDateFormat fullDateFormat;
-	public SimpleDateFormat fullTimeFormat;
-
-
-	//Logging
-	//FileWriter logger;
-
-
-
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
+
 	@Override
 	public void robotInit() {
 
@@ -151,7 +131,7 @@ public class Robot extends IterativeRobot {
 		zeroGyro = navxTable.getEntry("ZeroGyro");
 
 
-		//Initialize NetworkTAble values
+		//Initialize NetworkTable values
 		robotStop.setDouble(0.0);
 
 
@@ -175,11 +155,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putString("Side", mySide);
 		SmartDashboard.putNumber("Cubes", numberOfCubes);
 
-		//Initialize date variables
-		currentDate = new Date();
-		fullDateFormat = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
-		fullTimeFormat = new SimpleDateFormat("hh:mm:ss");
-
+		
 	}
 
 
@@ -200,7 +176,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledInit() {
 
-
+		//SmartDashboard.("Target");
+		//SmartDashboard.clearPersistent("Side");
 	}
 
 
