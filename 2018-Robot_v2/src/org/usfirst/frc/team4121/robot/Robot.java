@@ -460,10 +460,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putString("Gear Postion: ", shifter.gearPosition());
 		SmartDashboard.putString("Drive Direction:", Integer.toString(RobotMap.DIRECTION_MULTIPLIER));		
 
-		//SmartDashboard.putNumber("Master Current", Robot.elevator.m_motor.getOutputCurrent());
-		//SmartDashboard.putNumber("Slave Current", Robot.elevator.m_motor2_follower.getOutputCurrent());
-		//SmartDashboard.putNumber("Master Output", Robot.elevator.m_motor.getMotorOutputPercent());
-		//SmartDashboard.putNumber("Slave Output", Robot.elevator.m_motor2_follower.getMotorOutputPercent());
+		SmartDashboard.putNumber("Master Current", Robot.elevator.m_motor.getOutputCurrent());
+		SmartDashboard.putNumber("Slave Current", Robot.elevator.m_motor2_follower.getOutputCurrent());
+		SmartDashboard.putNumber("Master Output", Robot.elevator.m_motor.getMotorOutputPercent());
+		SmartDashboard.putNumber("Slave Output", Robot.elevator.m_motor2_follower.getMotorOutputPercent());
 
 
 
