@@ -1,6 +1,5 @@
 package org.usfirst.frc.team4121.robot;
 
-import org.usfirst.frc.team4121.robot.commands.AutoRightSideNoTurnCommandGroup;
 import org.usfirst.frc.team4121.robot.commands.AutoRobotCenterSwitchLeft1Cube;
 import org.usfirst.frc.team4121.robot.commands.AutoRobotCenterSwitchRight1Cube;
 import org.usfirst.frc.team4121.robot.commands.AutoRobotLeftScaleLeft1Cube;
@@ -11,7 +10,6 @@ import org.usfirst.frc.team4121.robot.commands.AutoRobotRightScaleLeft1Cube;
 import org.usfirst.frc.team4121.robot.commands.AutoRobotRightScaleRight1Cube;
 import org.usfirst.frc.team4121.robot.commands.AutoRobotRightScaleRight2Cubes;
 import org.usfirst.frc.team4121.robot.commands.AutoRobotRightSwitchRight1Cube;
-import org.usfirst.frc.team4121.robot.commands.AutoStopCommand;
 import org.usfirst.frc.team4121.robot.commands.AutoStraightCommandGroup;
 import org.usfirst.frc.team4121.robot.subsystems.ClimberSubsystem;
 import org.usfirst.frc.team4121.robot.subsystems.DriveTrainSubsystem;
@@ -29,13 +27,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 
 /**

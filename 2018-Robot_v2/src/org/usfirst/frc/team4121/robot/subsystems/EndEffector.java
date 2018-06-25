@@ -1,6 +1,5 @@
 package org.usfirst.frc.team4121.robot.subsystems;
 
-import org.usfirst.frc.team4121.robot.Robot;
 import org.usfirst.frc.team4121.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;

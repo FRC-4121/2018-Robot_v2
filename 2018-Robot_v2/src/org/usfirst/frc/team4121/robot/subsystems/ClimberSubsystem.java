@@ -4,7 +4,8 @@ package org.usfirst.frc.team4121.robot.subsystems;
 import org.usfirst.frc.team4121.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.*;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**

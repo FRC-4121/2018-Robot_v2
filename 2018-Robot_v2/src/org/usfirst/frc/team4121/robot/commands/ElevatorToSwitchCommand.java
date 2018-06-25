@@ -2,7 +2,6 @@ package org.usfirst.frc.team4121.robot.commands;
 
 import org.usfirst.frc.team4121.robot.Robot;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
