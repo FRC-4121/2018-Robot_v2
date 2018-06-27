@@ -96,8 +96,8 @@ public class OI {
 		closeGrabber = new JoystickButton(xbox, 8); //start button
 		//bumpUp = new JoystickButton(xbox, 9); //left mini joystick
 		//bumpDown = new JoystickButton(xbox, 10); //right mini joystick
-		climb = new JoystickButton(xbox, 9);
-		reverseClimb = new JoystickButton(xbox, 10);
+		climb = new JoystickButton(xbox, 10);
+		reverseClimb = new JoystickButton(xbox, 9);
 		
 		//define left joystick button commands
 		shiftUp.whenActive(new ShiftUpCommand());
