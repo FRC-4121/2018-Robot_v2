@@ -215,8 +215,8 @@ public class Robot extends IterativeRobot {
 
 
 		//Get game related data from SmartDashboard
-		mySide = SmartDashboard.getString("Side", "LEFT");
-		myTarget = SmartDashboard.getString("Target", "SCALE");
+		mySide = SmartDashboard.getString("Side", "STRAIGHT");
+		myTarget = SmartDashboard.getString("Target", "STRAIGHT");
 		numberOfCubes = SmartDashboard.getNumber("Cubes", 2.0);
 		
 		autonomousCommand = new AutoStraightCommandGroup();
@@ -351,14 +351,7 @@ public class Robot extends IterativeRobot {
 						else
 						{
 
-							if (numberOfCubes == 1.0)
-							{
-								autonomousCommand = new AutoRobotRightSwitchRight1Cube();
-							}
-							else
-							{
-								autonomousCommand = new AutoRobotRightSwitchRight1Cube();
-							}
+							autonomousCommand = new AutoRobotRightSwitchRight1Cube();
 
 						}
 
