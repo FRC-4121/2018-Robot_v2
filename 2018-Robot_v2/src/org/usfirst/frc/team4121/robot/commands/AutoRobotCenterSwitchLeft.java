@@ -5,17 +5,18 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutoRobotCenterSwitchLeft1Cube extends CommandGroup {
+public class AutoRobotCenterSwitchLeft extends CommandGroup {
 
-    public AutoRobotCenterSwitchLeft1Cube() {
+    public AutoRobotCenterSwitchLeft() {
     	
     	addSequential(new ShiftDownCommand());
-    	addSequential(new AutoDrive(20, -1, 0, 5)); 
+    	addSequential(new BeginningMatchCommandGroup());
+    	addSequential(new AutoDrive(40, -1, 0, 3)); 
     	addSequential(new AutoTurn (-90, 1));   	
-    	addSequential(new AutoDrive(43, -1, -90, 5));
+    	addSequential(new AutoDrive(60, -1, -90, 4));
     	addSequential(new AutoTurn (0, 1));   
     	addSequential(new ElevatorToSwitchCommand());
-    	addSequential(new AutoDrive(80, -1, 0, 10));
+    	addSequential(new AutoDrive(70, -1, 0, 3));
     	addSequential (new EjectCubeCommand(-.58));
     }
 }

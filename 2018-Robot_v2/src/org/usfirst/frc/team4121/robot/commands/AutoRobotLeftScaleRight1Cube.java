@@ -14,7 +14,7 @@ public class AutoRobotLeftScaleRight1Cube extends CommandGroup {
     	addSequential(new AutoDrive(197, -1, 0, 10)); //drive to switch  
     	addSequential(new ShiftDownCommand());
     	addSequential(new AutoTurn (90, 1));   	
-    	addSequential(new AutoDrive(100, -1, 90, 10));
+    	addSequential(new AutoDrive(110, -1, 90, 10));
     	addSequential(new ElevatorToSwitchCommand());   	
     	addSequential(new AutoDrive(80, -1, 90, 10));   	
     	//addSequential(new ElevatorToScaleCommand());
