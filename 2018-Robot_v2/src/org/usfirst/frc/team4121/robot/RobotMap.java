@@ -30,8 +30,8 @@ public class RobotMap {
 	public static final int CLIMBER1 = 8;
 	public static final int ENDMOTOR1 = 6;
 	public static final int ENDMOTOR2 = 3; 
-	public static final int ELEVATOR_MOTOR_MASTER = 2;
-	public static final int ELEVATOR_MOTOR_SLAVE = 0;
+	public static final int ELEVATOR_MOTOR_MASTER = 0;
+	public static final int ELEVATOR_MOTOR_SLAVE = 2;
 	public static final int ANGLEMOTOR = 9; //need to change value
 
 	//Motor Speeds

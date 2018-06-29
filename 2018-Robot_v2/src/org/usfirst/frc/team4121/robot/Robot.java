@@ -212,7 +212,7 @@ public class Robot extends IterativeRobot {
 
 		//Get game related data from SmartDashboard
 		mySide = SmartDashboard.getString("Side", "LEFT");
-		myTarget = SmartDashboard.getString("Target", "SCALE");
+		myTarget = SmartDashboard.getString("Target", "SWitch");
 		numberOfCubes = SmartDashboard.getNumber("Cubes", 2.0);
 		
 		autonomousCommand = new AutoStraightCommandGroup();
